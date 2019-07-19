@@ -5,12 +5,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.team4373.robot.RobotMap;
 
 /**
- * A Javadoc template. TODO: Update SwerveMotor Javadoc.
+ * A Javadoc template. TODO: Update SwerveWheel Javadoc.
  */
-public class SwerveMotor {
+public class SwerveWheel {
     private WPI_TalonSRX driveMotor;
     private WPI_TalonSRX rotatorMotor;
-    public SwerveMotor(Drivetrain.MotorID motorID) {
+
+    public SwerveWheel(Drivetrain.MotorID motorID) {
         RobotMap.MotorConfig driveMotorConfig = RobotMap.getDriveMotorConfig(motorID);
         RobotMap.MotorConfig rotatorMotorConfig = RobotMap.getRotatorMotorConfig(motorID);
 
@@ -26,15 +27,8 @@ public class SwerveMotor {
         this.driveMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         this.rotatorMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     }
+
     public double getAngle() {
         return 0;//FIXME: ...obviously
-    }
-
-    public WPI_TalonSRX getDriveMotor() {
-        return this.driveMotor;
-    }
-
-    public WPI_TalonSRX getRotatorMotor() {
-        return this.rotatorMotor;
     }
 }

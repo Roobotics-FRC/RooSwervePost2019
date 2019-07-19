@@ -18,13 +18,13 @@ public class RobotMap {
 
     public static class MotorConfig {
         public final int port;
-        public final NeutralMode neutralMode;
         public final boolean inverted;
+        public final NeutralMode neutralMode;
 
-        public MotorConfig(int port, NeutralMode neutralMode, boolean inverted) {
+        public MotorConfig(int port, boolean inverted, NeutralMode neutralMode) {
             this.port = port;
-            this.neutralMode = neutralMode;
             this.inverted = inverted;
+            this.neutralMode = neutralMode;
         }
 
     }
@@ -33,13 +33,13 @@ public class RobotMap {
     public static MotorConfig getDriveMotorConfig(Drivetrain.MotorID motorID) {
         switch (motorID) {
             case LEFT_1:
-                return new MotorConfig(11, NeutralMode.Brake, false);
+                return new MotorConfig(11, false, NeutralMode.Brake);
             case LEFT_2:
-                return new MotorConfig(13, NeutralMode.Brake, false);
+                return new MotorConfig(13, false, NeutralMode.Brake);
             case RIGHT_1:
-                return new MotorConfig(15, NeutralMode.Brake, false);
+                return new MotorConfig(15, false, NeutralMode.Brake);
             case RIGHT_2:
-                return new MotorConfig(17, NeutralMode.Brake, false);
+                return new MotorConfig(17, false, NeutralMode.Brake);
             default:
                 return getDriveMotorConfig(Drivetrain.MotorID.LEFT_1);
         }
@@ -47,13 +47,13 @@ public class RobotMap {
     public static MotorConfig getRotatorMotorConfig(Drivetrain.MotorID motorID) {
         switch (motorID) {
             case LEFT_1:
-                return new MotorConfig(12, NeutralMode.Brake, false);
+                return new MotorConfig(12, false, NeutralMode.Brake);
             case LEFT_2:
-                return new MotorConfig(14, NeutralMode.Brake, false);
+                return new MotorConfig(14, false, NeutralMode.Brake);
             case RIGHT_1:
-                return new MotorConfig(16, NeutralMode.Brake, false);
+                return new MotorConfig(16, false, NeutralMode.Brake);
             case RIGHT_2:
-                return new MotorConfig(18, NeutralMode.Brake, false);
+                return new MotorConfig(18, false, NeutralMode.Brake);
             default:
                 return getRotatorMotorConfig(Drivetrain.MotorID.LEFT_1);
         }
@@ -62,9 +62,9 @@ public class RobotMap {
 
     // PID- and sensor-related constants
     public static class PID {
-        public double kP;
-        public double kI;
-        public double kD;
+        public final double kP;
+        public final double kI;
+        public final double kD;
 
         PID(double kP, double kI, double kD) {
             this.kP = kP;

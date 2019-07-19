@@ -31,18 +31,18 @@ public class Drivetrain extends Subsystem {
         RIGHT_1, RIGHT_2, LEFT_1, LEFT_2
     }
 
-    private SwerveMotor right1;
-    private SwerveMotor right2;
-    private SwerveMotor left1;
-    private SwerveMotor left2;
+    private SwerveWheel right1;
+    private SwerveWheel right2;
+    private SwerveWheel left1;
+    private SwerveWheel left2;
     private PigeonIMU pigeon;
     private double initialAngle;
 
     private Drivetrain() {
-        this.right1 = new SwerveMotor(MotorID.RIGHT_1);
-        this.right2 = new SwerveMotor(MotorID.RIGHT_2);
-        this.left1 = new SwerveMotor(MotorID.LEFT_1);
-        this.left2 = new SwerveMotor(MotorID.LEFT_2);
+        this.right1 = new SwerveWheel(MotorID.RIGHT_1);
+        this.right2 = new SwerveWheel(MotorID.RIGHT_2);
+        this.left1 = new SwerveWheel(MotorID.LEFT_1);
+        this.left2 = new SwerveWheel(MotorID.LEFT_2);
 
         // this.pigeon = new PigeonIMU(this.right2.getRotatorMotor());
         //
@@ -188,7 +188,7 @@ public class Drivetrain extends Subsystem {
      * @param motorID the ID of the Talon to fetch.
      * @return the specified Talon.
      */
-    public SwerveMotor getSwerveMotor(MotorID motorID) {
+    public SwerveWheel getSwerveMotor(MotorID motorID) {
         switch (motorID) {
             case RIGHT_1:
                 return this.right1;
