@@ -1,5 +1,6 @@
 package frc.team4373.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.team4373.robot.RobotMap;
@@ -26,6 +27,16 @@ public class SwerveWheel {
 
         this.driveMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         this.rotatorMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    }
+
+    /**
+     * Sets the swerve wheel's two motors' PID loops.
+     * @param heading the heading, in degrees, at which to angle the wheel.
+     * @param velocity the percent of maximum velocity at which to drive.
+     */
+    public void set(double heading, double velocity) {
+        this.driveMotor.set(ControlMode.Velocity, velocity * RobotMap.MAX_WHEEL_VELOCITY);
+        // TODO: set rotator motor
     }
 
     public double getAngle() {
