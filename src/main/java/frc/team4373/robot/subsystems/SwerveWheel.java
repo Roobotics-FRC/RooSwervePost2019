@@ -29,6 +29,9 @@ public class SwerveWheel {
         this.driveMotor.setNeutralMode(driveMotorConfig.neutralMode);
         this.rotatorMotor.setNeutralMode(rotatorMotorConfig.neutralMode);
 
+        this.driveMotor.setSensorPhase(driveMotorConfig.encoderPhase);
+        this.rotatorMotor.setSensorPhase(rotatorMotorConfig.encoderPhase);
+
         this.driveMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         this.rotatorMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     }
