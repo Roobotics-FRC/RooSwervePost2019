@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.team4373.robot.Robot;
+import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.commands.teleop.SwerveDriveWithJoystick;
 
 /**
@@ -44,7 +45,7 @@ public class Drivetrain extends Subsystem {
         this.left1 = new SwerveWheel(MotorID.LEFT_1);
         this.left2 = new SwerveWheel(MotorID.LEFT_2);
 
-        // this.pigeon = new PigeonIMU(this.right2.getRotatorMotor());
+        this.pigeon = new PigeonIMU(RobotMap.PIGEON_PORT);
         //
         // this.right2.follow(right1);
         // this.left2.follow(left1);

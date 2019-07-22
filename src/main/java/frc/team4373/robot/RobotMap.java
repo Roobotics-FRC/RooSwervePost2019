@@ -30,6 +30,7 @@ public class RobotMap {
     }
 
     // Motor CAN chain identifiers
+    public static final int PIGEON_PORT = 19;
     public static MotorConfig getDriveMotorConfig(Drivetrain.MotorID motorID) {
         switch (motorID) {
             case LEFT_1:
