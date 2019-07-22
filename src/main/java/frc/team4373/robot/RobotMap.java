@@ -17,8 +17,9 @@ public class RobotMap {
     public static final int OPERATOR_JOYSTICK_PORT = 1;
 
     // Wheels et al.
-    public static final double MAX_WHEEL_VELOCITY = 1; // TODO: calculate this
+    public static final double MAX_WHEEL_SPEED = 1; // TODO: calculate this
     public static final double WHEEL_ENCODER_TICKS = 4096;
+    public static final int HEADING_PID_IDX = 0;
 
     public static class MotorConfig {
         public final int port;

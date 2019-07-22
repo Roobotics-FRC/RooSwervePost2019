@@ -32,11 +32,28 @@ public class SwerveWheel {
     /**
      * Sets the swerve wheel's two motors' PID loops.
      * @param heading the heading, in degrees, at which to angle the wheel.
-     * @param velocity the percent of maximum velocity at which to drive.
+     * @param speed the percent of maximum speed at which to drive.
      */
-    public void set(double heading, double velocity) {
-        this.driveMotor.set(ControlMode.Velocity, velocity * RobotMap.MAX_WHEEL_VELOCITY);
-        // TODO: set rotator motor
+    public void set(double heading, double speed) {
+        setSpeed(speed);
+        setHeading(heading);
+    }
+
+    /**
+     * Sets the speed to the given value.
+     * @param speed The percent of maximum speed at which to drive.
+     */
+    private void setSpeed(double speed) {
+        this.driveMotor.set(ControlMode.Velocity, speed * RobotMap.MAX_WHEEL_SPEED);
+    }
+
+    /**
+     * Sets the heading to the given value.
+     * @param heading THe heading, in degrees, at which to angle the wheel.
+     */
+    private void setHeading(double heading) {
+        this.rotatorMotor.set(ControlMode.Position, heading); //This needs to be converted to encoder ticks.
+        //FIXME: This isn't a real implementation...
     }
 
     public double getAngle() {
