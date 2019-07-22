@@ -23,7 +23,7 @@ public final class RobotMap {
     public static final double WHEEL_ENCODER_TICKS = 4096;
     public static final int HEADING_PID_IDX = 0;
 
-    public static class MotorConfig {
+    public static final class MotorConfig {
         public final int port;
         public final boolean inverted;
         public final NeutralMode neutralMode;
@@ -88,7 +88,7 @@ public final class RobotMap {
     }
 
     // PID- and sensor-related constants
-    public static class PID {
+    public static final class PID {
         public final double kP;
         public final double kI;
         public final double kD;
