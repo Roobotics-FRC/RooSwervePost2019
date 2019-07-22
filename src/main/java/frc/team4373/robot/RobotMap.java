@@ -7,7 +7,9 @@ import frc.team4373.robot.subsystems.Drivetrain;
  * Holds various mappings and constants.
  */
 
-public class RobotMap {
+public final class RobotMap {
+    private RobotMap() {}
+
     // Sensor phase configuration
     public static final boolean DRIVETRAIN_RIGHT_ENCODER_PHASE = false;
     public static final boolean DRIVETRAIN_LEFT_ENCODER_PHASE = false;
@@ -26,6 +28,12 @@ public class RobotMap {
         public final boolean inverted;
         public final NeutralMode neutralMode;
 
+        /**
+         * Constructs a new MotorConfig.
+         * @param port the port to which the motor is attached.
+         * @param inverted whether to invert motor output values.
+         * @param neutralMode the motor's passive neutral mode.
+         */
         public MotorConfig(int port, boolean inverted, NeutralMode neutralMode) {
             this.port = port;
             this.inverted = inverted;
@@ -36,8 +44,14 @@ public class RobotMap {
 
     // Motor CAN chain identifiers
     public static final int PIGEON_PORT = 19;
-    public static MotorConfig getDriveMotorConfig(Drivetrain.MotorID motorID) {
-        switch (motorID) {
+
+    /**
+     * Gets the drive motor configuration for the specified wheel.
+     * @param wheelID the wheel whose configuration to fetch.
+     * @return the drive motor configuration for the specified wheel.
+     */
+    public static MotorConfig getDriveMotorConfig(Drivetrain.WheelID wheelID) {
+        switch (wheelID) {
             case LEFT_1:
                 return new MotorConfig(11, false, NeutralMode.Brake);
             case LEFT_2:
@@ -47,11 +61,17 @@ public class RobotMap {
             case RIGHT_2:
                 return new MotorConfig(17, false, NeutralMode.Brake);
             default:
-                return getDriveMotorConfig(Drivetrain.MotorID.LEFT_1);
+                return getDriveMotorConfig(Drivetrain.WheelID.LEFT_1);
         }
     }
-    public static MotorConfig getRotatorMotorConfig(Drivetrain.MotorID motorID) {
-        switch (motorID) {
+
+    /**
+     * Gets the rotator motor configuration for the specified wheel.
+     * @param wheelID the wheel whose configuration to fetch.
+     * @return the rotator motor configuration for the specified wheel.
+     */
+    public static MotorConfig getRotatorMotorConfig(Drivetrain.WheelID wheelID) {
+        switch (wheelID) {
             case LEFT_1:
                 return new MotorConfig(12, false, NeutralMode.Brake);
             case LEFT_2:
@@ -61,9 +81,9 @@ public class RobotMap {
             case RIGHT_2:
                 return new MotorConfig(18, false, NeutralMode.Brake);
             default:
-                return getRotatorMotorConfig(Drivetrain.MotorID.LEFT_1);
+                return getRotatorMotorConfig(Drivetrain.WheelID.LEFT_1);
         }
-        // Equivalent to: `return getDriveMotor(motorID) + 1;`
+        // Equivalent to: `return getDriveMotor(wheelID) + 1;`
     }
 
     // PID- and sensor-related constants

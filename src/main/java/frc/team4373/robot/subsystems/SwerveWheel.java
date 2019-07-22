@@ -6,15 +6,19 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.team4373.robot.RobotMap;
 
 /**
- * A Javadoc template. TODO: Update SwerveWheel Javadoc.
+ * Represents a swerve wheel with two motors.
  */
 public class SwerveWheel {
     private WPI_TalonSRX driveMotor;
     private WPI_TalonSRX rotatorMotor;
 
-    public SwerveWheel(Drivetrain.MotorID motorID) {
-        RobotMap.MotorConfig driveMotorConfig = RobotMap.getDriveMotorConfig(motorID);
-        RobotMap.MotorConfig rotatorMotorConfig = RobotMap.getRotatorMotorConfig(motorID);
+    /**
+     * Constructs a new sweve wheel for the specified wheel.
+     * @param wheelID the wheel to construct.
+     */
+    public SwerveWheel(Drivetrain.WheelID wheelID) {
+        RobotMap.MotorConfig driveMotorConfig = RobotMap.getDriveMotorConfig(wheelID);
+        RobotMap.MotorConfig rotatorMotorConfig = RobotMap.getRotatorMotorConfig(wheelID);
 
         this.driveMotor = new WPI_TalonSRX(driveMotorConfig.port);
         this.rotatorMotor = new WPI_TalonSRX(rotatorMotorConfig.port);
@@ -52,11 +56,16 @@ public class SwerveWheel {
      * @param heading THe heading, in degrees, at which to angle the wheel.
      */
     private void setHeading(double heading) {
-        this.rotatorMotor.set(ControlMode.Position, heading); //This needs to be converted to encoder ticks.
+        // This needs to be converted to encoder ticks.
+        this.rotatorMotor.set(ControlMode.Position, heading);
         //FIXME: This isn't a real implementation...
     }
 
-    public double getAngle() {
-        return 0;//FIXME: ...obviously
+    /**
+     * Stops all motors.
+     */
+    public void stop() {
+        this.driveMotor.set(ControlMode.PercentOutput, 0);
+        this.rotatorMotor.set(ControlMode.PercentOutput, 0);
     }
 }

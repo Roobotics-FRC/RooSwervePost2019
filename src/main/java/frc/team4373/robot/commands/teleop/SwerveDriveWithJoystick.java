@@ -1,11 +1,12 @@
 package frc.team4373.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.team4373.robot.Utils;
 import frc.team4373.robot.input.OI;
 import frc.team4373.robot.subsystems.Drivetrain;
 
 /**
- * A Javadoc template. TODO: Update SwerveDriveWithJoystick Javadoc.
+ * A command that allows control of the swerve drive using the joystick.
  */
 public class SwerveDriveWithJoystick extends Command {
     private Drivetrain drivetrain;
@@ -24,10 +25,8 @@ public class SwerveDriveWithJoystick extends Command {
         double x = OI.getInstance().getDriveJoystick().rooGetX();
         double y = OI.getInstance().getDriveJoystick().rooGetY();
         double z = OI.getInstance().getDriveJoystick().rooGetZFiltered();
-        double angle = drivetrain.calculateAngle(x, y);
-        drivetrain.rotate(angle > drivetrain.getWheelAngle() ? 0.3 : -0.3);
-
-        //TODO: rotating
+        double angle = Utils.calculateYOffset(x, y);
+        //TODO: implement
     }
 
     @Override
