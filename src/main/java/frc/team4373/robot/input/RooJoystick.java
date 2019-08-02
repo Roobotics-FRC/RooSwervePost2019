@@ -137,12 +137,23 @@ public class RooJoystick<F extends DoubleTypeFilter> extends Joystick {
     }
 
     /**
-     * Gets the angle the joystick is facing relative to neutral.
-     * @return the joystick angle.
+     * Calculates a normalized (0–360) angle from the y-axis to the joystick's filtered position.
+     * This is analogous to a polar theta-value.
+     * @return the normalized angle from the y-axis to the joystick location, in degrees.
      */
     public double getAngle() {
-        double x = this.getAxis(Axis.X);
-        double y = this.getAxis(Axis.Y);
-        return Math.atan(y / x);
+        // Compute the angle relative to the y-axis (90°)
+        double rawAngle = 90 - Math.toDegrees(Math.atan2(rooGetY(), rooGetX()));
+        // Normalize the angle so that it is positive
+        return ((rawAngle % 360) + 360) % 360;
+    }
+
+    /**
+     * Returns the absolute (positive) distance from the origin by which the joystick has been
+     * displaced. This is analogous to a polar r-value.
+     * @return the distance the joystick has been moved from the origin.
+     */
+    public double getDistance() {
+        return Math.sqrt(Math.pow(rooGetX(), 2) + Math.pow(rooGetY(), 2));
     }
 }
