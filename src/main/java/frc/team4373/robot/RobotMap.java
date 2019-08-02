@@ -10,10 +10,6 @@ import frc.team4373.robot.subsystems.Drivetrain;
 public final class RobotMap {
     private RobotMap() {}
 
-    // Sensor phase configuration
-    public static final boolean DRIVETRAIN_RIGHT_ENCODER_PHASE = false;
-    public static final boolean DRIVETRAIN_LEFT_ENCODER_PHASE = false;
-
     // OI devices
     public static final int DRIVE_JOYSTICK_PORT = 0;
     public static final int OPERATOR_JOYSTICK_PORT = 1;
@@ -22,6 +18,7 @@ public final class RobotMap {
     public static final double MAX_WHEEL_SPEED = 1; // TODO: calculate this
     public static final double WHEEL_ENCODER_TICKS = 4096;
     public static final int HEADING_PID_IDX = 0;
+    public static final double DEGREES_TO_ENCODER_TICKS = -1; //FIXME: calculate this
 
     public static final class MotorConfig {
         public final int port;

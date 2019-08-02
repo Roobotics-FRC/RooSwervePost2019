@@ -11,6 +11,8 @@ import frc.team4373.robot.RobotMap;
 public class SwerveWheel {
     private WPI_TalonSRX driveMotor;
     private WPI_TalonSRX rotatorMotor;
+    private static final double HALF_REVOLUTION_TICKS = 180 * RobotMap.DEGREES_TO_ENCODER_TICKS;
+    private static final double FULL_REVOLUTION_TICKS = 360 * RobotMap.DEGREES_TO_ENCODER_TICKS;
 
     /**
      * Constructs a new sweve wheel for the specified wheel.
@@ -56,12 +58,16 @@ public class SwerveWheel {
 
     /**
      * Sets the heading to the given value.
-     * @param heading THe heading, in degrees, at which to angle the wheel.
+     * @param heading The heading, in degrees, at which to angle the wheel.
      */
     private void setHeading(double heading) {
-        // This needs to be converted to encoder ticks.
-        this.rotatorMotor.set(ControlMode.Position, heading);
-        //FIXME: This isn't a real implementation...
+        double current = this.rotatorMotor.getSelectedSensorPosition() * RobotMap.DEGREES_TO_ENCODER_TICKS;
+        double target = heading * RobotMap.DEGREES_TO_ENCODER_TICKS;
+        double error = target - current;
+        if (Math.abs(error) > HALF_REVOLUTION_TICKS) {
+            error = -(Math.signum(error) * (FULL_REVOLUTION_TICKS - Math.abs(error)));
+        }
+        this.rotatorMotor.set(ControlMode.Position, current + error);
     }
 
     /**

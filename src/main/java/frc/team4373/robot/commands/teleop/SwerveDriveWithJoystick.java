@@ -25,7 +25,8 @@ public class SwerveDriveWithJoystick extends Command {
         double x = OI.getInstance().getDriveJoystick().rooGetX();
         double y = OI.getInstance().getDriveJoystick().rooGetY();
         double z = OI.getInstance().getDriveJoystick().rooGetZFiltered();
-        double angle = Utils.calculateYOffset(x, y);
+        // double angle = Utils.calculateYOffset(x, y);
+        double angle = OI.getInstance().getDriveJoystick().getAngle();
         //TODO: implement
     }
 
