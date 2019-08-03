@@ -44,6 +44,14 @@ public class SwerveWheel {
      * @param speed the percent of maximum speed at which to drive.
      */
     public void set(double heading, double speed) {
+        /*
+        // minimize azimuth rotation, reversing drive if necessary
+        isInverted = Math.abs(azimuthError) > 0.25 * TICKS;
+        if (isInverted) {
+            azimuthError -= Math.copySign(0.5 * TICKS, azimuthError);
+            drive = -drive;
+        }
+        *///TODO: This would mean that instead of turning 170°, we turn -10 and flip the speed.
         setSpeed(speed);
         setHeading(heading);
     }
@@ -61,7 +69,7 @@ public class SwerveWheel {
      * @param heading The heading, in degrees, at which to angle the wheel.
      */
     private void setHeading(double heading) {
-        double current = this.rotatorMotor.getSelectedSensorPosition() * RobotMap.DEGREES_TO_ENCODER_TICKS;
+        double current = this.rotatorMotor.getSelectedSensorPosition();
         double target = heading * RobotMap.DEGREES_TO_ENCODER_TICKS;
         double error = target - current;
         if (Math.abs(error) > HALF_REVOLUTION_TICKS) {

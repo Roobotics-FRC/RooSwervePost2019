@@ -10,6 +10,9 @@ import frc.team4373.robot.subsystems.Drivetrain;
 public final class RobotMap {
     private RobotMap() {}
 
+    public static final double ROBOT_WHEELBASE = -1;
+    public static final double ROBOT_TRACKWIDTH = -1;
+
     // OI devices
     public static final int DRIVE_JOYSTICK_PORT = 0;
     public static final int OPERATOR_JOYSTICK_PORT = 1;
