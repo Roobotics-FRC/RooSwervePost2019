@@ -81,14 +81,13 @@ public class Drivetrain extends Subsystem {
 
     /**
      * Drives, in swerve mode, using the given inputs.
-     * <p>
-     * See https://www.chiefdelphi.com/t/paper-4-wheel-independent-drive-independent-steering-swerve/107383
+     *
+     * <p>See https://www.chiefdelphi.com/t/107383
      * @param rotation The rotation of the joystick (CW is positive)
      * @param x The x coordinate of the joystick (right is positive)
      * @param y THe y coordinate of teh joystick (forward is positive)
      */
     public void drive(double rotation, double x, double y) {
-        // See https://www.chiefdelphi.com/t/paper-4-wheel-independent-drive-independent-steering-swerve/107383
         double angle = Math.toRadians(getAngle());
 
         final double temp = y * Math.cos(angle) + x * Math.sin(angle);
@@ -113,7 +112,8 @@ public class Drivetrain extends Subsystem {
         angles[2] = Math.toDegrees(Math.atan2(A,D));
         angles[3] = Math.toDegrees(Math.atan2(A,C));
 
-        final double highestWheelSpeed = Math.max(Math.max(speeds[0], speeds[1]),Math.max(speeds[2], speeds[3]));
+        final double highestWheelSpeed = Math.max(Math.max(speeds[0], speeds[1]),
+                Math.max(speeds[2], speeds[3]));
         if (highestWheelSpeed > 1) {
             for (int i = 0; i < 4; ++i) {
                 speeds[i] /= highestWheelSpeed;

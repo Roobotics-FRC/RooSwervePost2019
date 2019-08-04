@@ -35,7 +35,8 @@ public final class RobotMap {
          * @param inverted whether to invert motor output values.
          * @param neutralMode the motor's passive neutral mode.
          */
-        public MotorConfig(int port, boolean inverted, NeutralMode neutralMode, boolean encoderPhase) {
+        public MotorConfig(int port, boolean inverted,
+                           NeutralMode neutralMode, boolean encoderPhase) {
             this.port = port;
             this.inverted = inverted;
             this.neutralMode = neutralMode;

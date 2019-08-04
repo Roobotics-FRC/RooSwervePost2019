@@ -95,7 +95,7 @@ public class RooJoystick<F extends DoubleTypeFilter> extends Joystick {
     }
 
     /**
-     * Returns z-axis with a less sensitive filter, especially at low power
+     * Returns z-axis with a less sensitive filter, especially at low power.
      * @return The filtered z-axis.
      */
     public double newRooGetZFiltered() {
