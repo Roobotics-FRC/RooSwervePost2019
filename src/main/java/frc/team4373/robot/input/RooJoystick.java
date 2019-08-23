@@ -1,6 +1,7 @@
 package frc.team4373.robot.input;
 
 import edu.wpi.first.wpilibj.Joystick;
+import frc.team4373.robot.Utils;
 import frc.team4373.robot.input.filters.DoubleTypeFilter;
 
 /**
@@ -145,7 +146,7 @@ public class RooJoystick<F extends DoubleTypeFilter> extends Joystick {
         // Compute the angle relative to the y-axis (90°)
         double rawAngle = 90 - Math.toDegrees(Math.atan2(rooGetY(), rooGetX()));
         // Normalize the angle so that it is positive
-        return ((rawAngle % 360) + 360) % 360;
+        return Utils.normalizeAngle(rawAngle);
     }
 
     /**

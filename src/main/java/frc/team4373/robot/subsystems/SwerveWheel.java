@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
+import frc.team4373.robot.Utils;
 
 /**
  * Represents a swerve wheel with two motors.
@@ -82,7 +83,7 @@ public class SwerveWheel {
      */
     private void setHeading(double heading) {
         double rawCurrent = this.rotatorMotor.getSelectedSensorPosition();
-        double current = ((rawCurrent % 4096) + 4096) % 4096;
+        double current = Utils.leastResidue(rawCurrent, 4096);
         double target = heading * RobotMap.DEGREES_TO_ENCODER_UNITS;
         double error = target - current;
         if (Math.abs(error) > HALF_REVOLUTION_TICKS) {

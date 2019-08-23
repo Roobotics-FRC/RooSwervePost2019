@@ -9,7 +9,7 @@ public final class Utils {
      * @return the angle represented as a positive angle on the range [0, 360].
      */
     public static double normalizeAngle(double angle) {
-        return ((angle % 360) + 360) % 360;
+        return leastResidue(angle, 360);
     }
 
     /**
@@ -20,5 +20,15 @@ public final class Utils {
      */
     public static double calculateYOffset(double x, double y) {
         return Utils.normalizeAngle(90 - Math.toDegrees(Math.atan2(y, x)));
+    }
+
+    /**
+     * Computes the least residue (i.e., > 0) of a number n modulo the given modulus.
+     * @param n the number whose least residue to compute.
+     * @param modulus the modulus in which to compute the least residue.
+     * @return the least residue.
+     */
+    public static double leastResidue(double n, double modulus) {
+        return ((n % modulus) + modulus) % modulus;
     }
 }
