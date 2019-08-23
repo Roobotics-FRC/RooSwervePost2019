@@ -11,8 +11,8 @@ import frc.team4373.robot.RobotMap;
 public class SwerveWheel {
     private WPI_TalonSRX driveMotor;
     private WPI_TalonSRX rotatorMotor;
-    private static final double HALF_REVOLUTION_TICKS = 180 * RobotMap.DEGREES_TO_ENCODER_TICKS;
-    private static final double FULL_REVOLUTION_TICKS = 360 * RobotMap.DEGREES_TO_ENCODER_TICKS;
+    private static final double HALF_REVOLUTION_TICKS = 180 * RobotMap.DEGREES_TO_PIGEON_UNITS;
+    private static final double FULL_REVOLUTION_TICKS = 360 * RobotMap.DEGREES_TO_PIGEON_UNITS;
 
     /**
      * Constructs a new sweve wheel for the specified wheel.
@@ -35,7 +35,17 @@ public class SwerveWheel {
         this.rotatorMotor.setSensorPhase(rotatorMotorConfig.encoderPhase);
 
         this.driveMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        this.rotatorMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        this.rotatorMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+
+        this.driveMotor.config_kF(RobotMap.PID_IDX, driveMotorConfig.gains.kF);
+        this.driveMotor.config_kP(RobotMap.PID_IDX, driveMotorConfig.gains.kP);
+        this.driveMotor.config_kI(RobotMap.PID_IDX, driveMotorConfig.gains.kI);
+        this.driveMotor.config_kD(RobotMap.PID_IDX, driveMotorConfig.gains.kD);
+
+        this.rotatorMotor.config_kF(RobotMap.PID_IDX, rotatorMotorConfig.gains.kF);
+        this.rotatorMotor.config_kP(RobotMap.PID_IDX, rotatorMotorConfig.gains.kP);
+        this.rotatorMotor.config_kI(RobotMap.PID_IDX, rotatorMotorConfig.gains.kI);
+        this.rotatorMotor.config_kD(RobotMap.PID_IDX, rotatorMotorConfig.gains.kD);
     }
 
     /**
@@ -70,7 +80,7 @@ public class SwerveWheel {
      */
     private void setHeading(double heading) {
         double current = this.rotatorMotor.getSelectedSensorPosition();
-        double target = heading * RobotMap.DEGREES_TO_ENCODER_TICKS;
+        double target = heading * RobotMap.DEGREES_TO_PIGEON_UNITS;
         double error = target - current;
         if (Math.abs(error) > HALF_REVOLUTION_TICKS) {
             error = -(Math.signum(error) * (FULL_REVOLUTION_TICKS - Math.abs(error)));
