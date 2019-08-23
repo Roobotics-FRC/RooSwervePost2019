@@ -3,6 +3,7 @@ package frc.team4373.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
 
 /**
@@ -11,8 +12,8 @@ import frc.team4373.robot.RobotMap;
 public class SwerveWheel {
     private WPI_TalonSRX driveMotor;
     private WPI_TalonSRX rotatorMotor;
-    private static final double HALF_REVOLUTION_TICKS = 180 * RobotMap.DEGREES_TO_PIGEON_UNITS;
-    private static final double FULL_REVOLUTION_TICKS = 360 * RobotMap.DEGREES_TO_PIGEON_UNITS;
+    private static final double HALF_REVOLUTION_TICKS = 180 * RobotMap.DEGREES_TO_ENCODER_UNITS;
+    private static final double FULL_REVOLUTION_TICKS = 360 * RobotMap.DEGREES_TO_ENCODER_UNITS;
 
     /**
      * Constructs a new sweve wheel for the specified wheel.
@@ -36,6 +37,7 @@ public class SwerveWheel {
 
         this.driveMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         this.rotatorMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        this.rotatorMotor.configFeedbackNotContinuous(false, 1000);
 
         this.driveMotor.config_kF(RobotMap.PID_IDX, driveMotorConfig.gains.kF);
         this.driveMotor.config_kP(RobotMap.PID_IDX, driveMotorConfig.gains.kP);
@@ -79,13 +81,14 @@ public class SwerveWheel {
      * @param heading The heading, in degrees, at which to angle the wheel.
      */
     private void setHeading(double heading) {
-        double current = this.rotatorMotor.getSelectedSensorPosition();
-        double target = heading * RobotMap.DEGREES_TO_PIGEON_UNITS;
+        double rawCurrent = this.rotatorMotor.getSelectedSensorPosition();
+        double current = ((rawCurrent % 4096) + 4096) % 4096;
+        double target = heading * RobotMap.DEGREES_TO_ENCODER_UNITS;
         double error = target - current;
         if (Math.abs(error) > HALF_REVOLUTION_TICKS) {
             error = -(Math.signum(error) * (FULL_REVOLUTION_TICKS - Math.abs(error)));
         }
-        this.rotatorMotor.set(ControlMode.Position, current + error);
+        this.rotatorMotor.set(ControlMode.Position, rawCurrent + error);
     }
 
     /**
@@ -94,5 +97,9 @@ public class SwerveWheel {
     public void stop() {
         this.driveMotor.set(ControlMode.PercentOutput, 0);
         this.rotatorMotor.set(ControlMode.PercentOutput, 0);
+    }
+
+    public void resetAbsoluteEncoder() {
+        this.rotatorMotor.setSelectedSensorPosition(0);
     }
 }

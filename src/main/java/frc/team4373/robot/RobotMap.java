@@ -21,7 +21,8 @@ public final class RobotMap {
     public static final double MAX_WHEEL_SPEED = 1; // TODO: calculate this
     public static final double WHEEL_ENCODER_TICKS = 4096;
     public static final int PID_IDX = 0;
-    public static final double DEGREES_TO_PIGEON_UNITS = 8192 / 360;
+    public static final double DEGREES_TO_PIGEON_UNITS = 8192d / 360d;
+    public static final double DEGREES_TO_ENCODER_UNITS = 4096d / 360d;
 
     public static final class MotorConfig {
         public final int port;

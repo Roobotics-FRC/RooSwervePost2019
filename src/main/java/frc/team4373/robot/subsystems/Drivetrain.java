@@ -126,6 +126,17 @@ public class Drivetrain extends Subsystem {
         right2.set(angles[3], speeds[3]);
     }
 
+    /**
+     * This function should <b>NEVER</b> <i>regularly</i> be called.
+     * It should be called once per mechanical change, with all wheels facing forward.
+     */
+    private void resetEncoders() {
+        this.right1.resetAbsoluteEncoder();
+        this.right2.resetAbsoluteEncoder();
+        this.left1.resetAbsoluteEncoder();
+        this.left2.resetAbsoluteEncoder();
+    }
+
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new SwerveDriveWithJoystick());
