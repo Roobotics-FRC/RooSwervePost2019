@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        Drivetrain.getInstance();
+        Drivetrain.getInstance().modularizeEncoders();
     }
 
     /**

@@ -127,6 +127,18 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
+     * Resets the encoders to within [-4095, 4095]
+     * Call this method in `robotInit` to (almost) eliminate the possibility of
+     *  accumulator rollover during one power cycle.
+     */
+    public void modularizeEncoders() {
+        this.right1.modularizeAbsoluteEncoder();
+        this.right2.modularizeAbsoluteEncoder();
+        this.left1.modularizeAbsoluteEncoder();
+        this.left2.modularizeAbsoluteEncoder();
+    }
+
+    /**
      * This function should <b>NEVER</b> <i>regularly</i> be called.
      * It should be called once per mechanical change, with all wheels facing forward.
      */

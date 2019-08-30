@@ -100,6 +100,10 @@ public class SwerveWheel {
         this.rotatorMotor.set(ControlMode.PercentOutput, 0);
     }
 
+    public void modularizeAbsoluteEncoder() {
+        this.rotatorMotor.setSelectedSensorPosition((int) (this.rotatorMotor.getSelectedSensorPosition() % FULL_REVOLUTION_TICKS));
+    }
+
     public void resetAbsoluteEncoder() {
         this.rotatorMotor.setSelectedSensorPosition(0);
     }
