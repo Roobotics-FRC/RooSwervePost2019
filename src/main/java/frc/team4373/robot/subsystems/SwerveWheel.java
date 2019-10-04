@@ -106,5 +106,6 @@ public class SwerveWheel {
 
     public void resetAbsoluteEncoder() {
         this.rotatorMotor.setSelectedSensorPosition(0);
+        this.driveMotor.setSelectedSensorPosition(0);
     }
 }

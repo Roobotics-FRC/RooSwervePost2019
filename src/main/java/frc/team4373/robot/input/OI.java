@@ -1,8 +1,10 @@
 package frc.team4373.robot.input;
 
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.input.filters.FineGrainedPiecewiseFilter;
 import frc.team4373.robot.input.filters.XboxAxisFilter;
+import frc.team4373.robot.subsystems.ResetEncoderCommand;
 
 /**
  * OI provides access to operator interface devices.
@@ -12,11 +14,16 @@ public class OI {
     private RooJoystick<FineGrainedPiecewiseFilter> driveJoystick;
     private RooJoystick<XboxAxisFilter> operatorJoystick;
 
+    private JoystickButton resetEncoders;
+
     private OI() {
         this.driveJoystick =
                 new RooJoystick<>(RobotMap.DRIVE_JOYSTICK_PORT, new FineGrainedPiecewiseFilter());
         this.operatorJoystick =
-                new RooJoystick<>(RobotMap.OPERATOR_JOYSTICK_PORT, new XboxAxisFilter());        
+                new RooJoystick<>(RobotMap.OPERATOR_JOYSTICK_PORT, new XboxAxisFilter());
+
+        this.resetEncoders = new JoystickButton(driveJoystick, 7);
+        resetEncoders.whenPressed(new ResetEncoderCommand());
     }
 
     /**
