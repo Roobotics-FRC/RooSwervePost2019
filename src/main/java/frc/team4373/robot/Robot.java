@@ -1,8 +1,11 @@
 package frc.team4373.robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.subsystems.Drivetrain;
 
 /**
@@ -14,6 +17,14 @@ import frc.team4373.robot.subsystems.Drivetrain;
  */
 public class Robot extends TimedRobot {
     private Command autonCommand = null;
+    private WPI_TalonSRX steer;
+    private WPI_TalonSRX drive;
+    private WPI_TalonSRX steer2;
+    private WPI_TalonSRX drive2;
+    private WPI_TalonSRX steer3;
+    private WPI_TalonSRX drive3;
+    private WPI_TalonSRX steer4;
+    private WPI_TalonSRX drive4;
 
     /**
      * Constructor for the Robot class. Variable initialization occurs here;
@@ -30,7 +41,22 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-        Drivetrain.getInstance().modularizeEncoders();
+        steer = new WPI_TalonSRX(12);
+        steer.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        drive = new WPI_TalonSRX(11);
+        drive.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        steer2 = new WPI_TalonSRX(14);
+        steer2.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        drive2 = new WPI_TalonSRX(13);
+        drive2.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        steer3 = new WPI_TalonSRX(16);
+        steer3.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        drive3 = new WPI_TalonSRX(15);
+        drive3.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        steer4 = new WPI_TalonSRX(18);
+        steer4.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+        drive4 = new WPI_TalonSRX(17);
+        drive4.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     }
 
     /**
@@ -43,6 +69,25 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
+        SmartDashboard.putNumber("Steering 1 pos", steer.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Steering 1 vel", steer.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Driving 1 pos", drive.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Driving 1 vel", drive.getSelectedSensorVelocity());
+
+        SmartDashboard.putNumber("Steering 2 pos", steer2.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Steering 2 vel", steer2.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Driving 2 pos", drive2.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Driving 2 vel", drive2.getSelectedSensorVelocity());
+
+        SmartDashboard.putNumber("Steering 3 pos", steer3.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Steering 3 vel", steer3.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Driving 3 pos", drive3.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Driving 3 vel", drive3.getSelectedSensorVelocity());
+
+        SmartDashboard.putNumber("Steering 4 pos", steer4.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Steering 4 vel", steer4.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Driving 4 pos", drive4.getSelectedSensorPosition());
+        SmartDashboard.putNumber("Driving 4 vel", drive4.getSelectedSensorVelocity());
     }
 
     /**
