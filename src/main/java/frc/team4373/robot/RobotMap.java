@@ -10,15 +10,15 @@ import frc.team4373.robot.subsystems.Drivetrain;
 public final class RobotMap {
     private RobotMap() {}
 
-    public static final double ROBOT_WHEELBASE = -1;
-    public static final double ROBOT_TRACKWIDTH = -1;
+    public static final double ROBOT_WHEELBASE = 27; //units don't matter, as only ratios are used
+    public static final double ROBOT_TRACKWIDTH = 22; //however, these are in inches
 
     // OI devices
     public static final int DRIVE_JOYSTICK_PORT = 0;
     public static final int OPERATOR_JOYSTICK_PORT = 1;
 
     // Wheels et al.
-    public static final double MAX_WHEEL_SPEED = 1; // TODO: calculate this
+    public static final double MAX_WHEEL_SPEED = 1000; // TODO: calculate this
     public static final double WHEEL_ENCODER_TICKS = 4096;
     public static final int PID_IDX = 0;
     public static final double DEGREES_TO_PIGEON_UNITS = 8192d / 360d;
