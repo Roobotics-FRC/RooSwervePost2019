@@ -92,6 +92,11 @@ public class SwerveWheel {
         this.rotatorMotor.set(ControlMode.Position, rawCurrent + error);
     }
 
+    public void setPercentOutput(double speed, double heading) {
+        this.driveMotor.set(ControlMode.PercentOutput, speed);
+        this.rotatorMotor.set(ControlMode.PercentOutput, heading);
+    }
+
     /**
      * Stops all motors.
      */
