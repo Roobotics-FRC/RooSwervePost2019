@@ -4,6 +4,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.Utils;
+import frc.team4373.robot.commands.teleop.DriveWithJoystick;
 import frc.team4373.robot.commands.teleop.SwerveDriveWithJoystick;
 
 /**
@@ -149,8 +150,24 @@ public class Drivetrain extends Subsystem {
         this.left2.resetAbsoluteEncoder();
     }
 
+    public SwerveWheel getSwerveWheel(WheelID wheel){
+       switch (wheel){
+           case RIGHT_1:
+               return this.right1;
+           case RIGHT_2:
+               return this.right2;
+           case LEFT_1:
+               return this.left1;
+           case LEFT_2:
+               return this.left2;
+
+       }
+       return null;
+
+    }
+
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new SwerveDriveWithJoystick());
+        setDefaultCommand(new DriveWithJoystick());
     }
 }
