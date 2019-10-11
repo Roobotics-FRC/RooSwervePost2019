@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.Utils;
+import frc.team4373.robot.input.WheelVector;
 
 /**
  * Represents a swerve wheel with two motors.
@@ -103,6 +104,11 @@ public class SwerveWheel {
     public void stop() {
         this.driveMotor.set(ControlMode.PercentOutput, 0);
         this.rotatorMotor.set(ControlMode.PercentOutput, 0);
+    }
+
+    public WheelVector encoderValues() {
+        return new WheelVector(driveMotor.getSelectedSensorVelocity(),
+                rotatorMotor.getSelectedSensorPosition());
     }
 
     public void modularizeAbsoluteEncoder() {

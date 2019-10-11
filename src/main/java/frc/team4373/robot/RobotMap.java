@@ -24,7 +24,7 @@ public final class RobotMap {
     public static final int BUTTON_KILL_AUTONS = 10;
 
     // Wheels et al.
-    public static final double MAX_WHEEL_SPEED = 1000; // TODO: calculate this
+    public static final double MAX_WHEEL_SPEED = 8400; // TODO: calculate this
     public static final double WHEEL_ENCODER_TICKS = 4096;
     public static final int PID_IDX = 0;
     public static final double DEGREES_TO_PIGEON_UNITS = 8192d / 360d;

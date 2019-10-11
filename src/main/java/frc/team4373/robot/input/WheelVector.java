@@ -8,4 +8,9 @@ public class WheelVector {
         this.speed = speed;
         this.angle = angle;
     }
+
+    @Override
+    public String toString() {
+        return "(speed: " + this.speed + ", angle: " + this.angle + ")";
+    }
 }

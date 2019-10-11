@@ -3,6 +3,7 @@ package frc.team4373.robot.subsystems;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.Utils;
 import frc.team4373.robot.commands.teleop.*;
@@ -136,6 +137,13 @@ public class Drivetrain extends Subsystem {
         this.right2.resetAbsoluteEncoder();
         this.left1.resetAbsoluteEncoder();
         this.left2.resetAbsoluteEncoder();
+    }
+
+    public void logEncoders() {
+        SmartDashboard.putString("R1", this.right1.encoderValues().toString());
+        SmartDashboard.putString("R2", this.right2.encoderValues().toString());
+        SmartDashboard.putString("L1", this.left1.encoderValues().toString());
+        SmartDashboard.putString("L2", this.left2.encoderValues().toString());
     }
 
     @Override

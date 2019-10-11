@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.input.WheelVector;
 import frc.team4373.robot.subsystems.Drivetrain;
-import frc.team4373.robot.subsystems.SwerveWheel;
+
+import java.util.Arrays;
 
 /**
  * A Javadoc template. TODO: Update DriveFromShuffleboard Javadoc.
@@ -44,10 +45,13 @@ public class DriveFromShuffleboard extends Command {
         WheelVector vecr2 = new WheelVector(SmartDashboard.getNumber("R2 Vel", 0),
                 SmartDashboard.getNumber("R2 Ang", 0));
 
+        WheelVector[] arr = new WheelVector[]{vecr1, vecl1, vecl2, vecr2};
+        SmartDashboard.putString("vectors", Arrays.toString(arr));
+
         if (SmartDashboard.getBoolean("Closed Loop", false)) {
-            this.drivetrain.setWheelsPercOut(new WheelVector[]{vecr1, vecl1, vecl2, vecr2});
+            this.drivetrain.setWheelsPID(arr);
         } else {
-            this.drivetrain.setWheelsPID(new WheelVector[]{vecr1, vecl1, vecl2, vecr2});
+            this.drivetrain.setWheelsPercOut(arr);
         }
     }
 
