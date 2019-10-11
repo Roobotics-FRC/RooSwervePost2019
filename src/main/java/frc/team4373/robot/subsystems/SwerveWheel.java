@@ -56,7 +56,7 @@ public class SwerveWheel {
      * @param heading the heading, in degrees, at which to angle the wheel.
      * @param speed the percent of maximum speed at which to drive.
      */
-    public void set(double heading, double speed) {
+    public void set(double speed, double heading) {
         /*
         // minimize azimuth rotation, reversing drive if necessary
         isInverted = Math.abs(azimuthError) > 0.25 * TICKS;
@@ -106,7 +106,8 @@ public class SwerveWheel {
     }
 
     public void modularizeAbsoluteEncoder() {
-        this.rotatorMotor.setSelectedSensorPosition((int) (this.rotatorMotor.getSelectedSensorPosition() % FULL_REVOLUTION_TICKS));
+        this.rotatorMotor.setSelectedSensorPosition(
+                (int) (this.rotatorMotor.getSelectedSensorPosition() % FULL_REVOLUTION_TICKS));
     }
 
     public void resetAbsoluteEncoder() {
