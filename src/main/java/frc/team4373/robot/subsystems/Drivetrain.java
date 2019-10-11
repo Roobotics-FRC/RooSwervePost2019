@@ -139,6 +139,9 @@ public class Drivetrain extends Subsystem {
         this.left2.resetAbsoluteEncoder();
     }
 
+    /**
+     * Logs encoder values to SmartDashboard.
+     */
     public void logEncoders() {
         SmartDashboard.putString("R1", this.right1.encoderValues().toString());
         SmartDashboard.putString("R2", this.right2.encoderValues().toString());
