@@ -25,6 +25,18 @@ class UtilsTest {
 
     @Test
     void leastResidue() {
+        assertThrows(IllegalArgumentException.class, () -> Utils.leastResidue(2, 0));
+        assertThrows(IllegalArgumentException.class, () -> Utils.leastResidue(2, -2));
+        assertEquals(Utils.leastResidue(5, 2), 1);
+        assertEquals(Utils.leastResidue(-5, 2), 1);
+        assertEquals(Utils.leastResidue(360, 360), 0);
+        assertEquals(Utils.leastResidue(400, 100), 0);
+        assertEquals(Utils.leastResidue(380, 360), 20);
+        assertEquals(Utils.leastResidue(-450, 360), 270);
+        assertEquals(Utils.leastResidue(0.5, 360), 0.5);
+        assertEquals(Utils.leastResidue(360.5, 360), 0.5);
+        assertEquals(Utils.leastResidue(-0.5, 2), 1.5);
         assertEquals(Utils.leastResidue(0, 0), 0);
+
     }
 }
