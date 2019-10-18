@@ -20,6 +20,11 @@ public final class Utils {
      */
     public static double calculateYOffset(double x, double y) {
         return Utils.normalizeAngle(90 - Math.toDegrees(Math.atan2(y, x)));
+
+        // // Compute the angle relative to the y-axis (90°)
+        // double rawAngle = 90 - Math.toDegrees(Math.atan2(rooGetY(), rooGetX()));
+        // // Normalize the angle so that it is positive
+        // return Utils.normalizeAngle(rawAngle);
     }
 
     /**

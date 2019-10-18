@@ -143,10 +143,7 @@ public class RooJoystick<F extends DoubleTypeFilter> extends Joystick {
      * @return the normalized angle from the y-axis to the joystick location, in degrees.
      */
     public double getAngle() {
-        // Compute the angle relative to the y-axis (90°)
-        double rawAngle = 90 - Math.toDegrees(Math.atan2(rooGetY(), rooGetX()));
-        // Normalize the angle so that it is positive
-        return Utils.normalizeAngle(rawAngle);
+        return Utils.calculateYOffset(rooGetX(), rooGetY());
     }
 
     /**
