@@ -30,13 +30,13 @@ public final class Utils {
     /**
      * Computes the least residue (i.e., > 0) of a number n modulo the given modulus.
      *
-     * @throws IllegalArgumentException if modulus <= 0.
-     *
      * @param n the number whose least residue to compute.
      * @param modulus the modulus in which to compute the least residue.
      * @return the least residue.
+     *
+     * @throws IllegalArgumentException if modulus <= 0.
      */
-    public static double leastResidue(double n, double modulus) {
+    public static double leastResidue(double n, double modulus) throws IllegalArgumentException {
         if (modulus <= 0) {
             throw new IllegalArgumentException("Modulus cannot be less than or equal to zero.");
         }
