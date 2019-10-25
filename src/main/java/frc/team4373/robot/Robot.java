@@ -3,6 +3,8 @@ package frc.team4373.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team4373.robot.commands.util.ResetWheelEncoderCommand;
 import frc.team4373.robot.subsystems.Drivetrain;
 
 /**
@@ -31,6 +33,12 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         Drivetrain.getInstance().modularizeEncoders();
+
+        for (Drivetrain.WheelID wheelID: Drivetrain.WheelID.values()) {
+            SmartDashboard.putData("Reset " + wheelID.name() + " Enc",
+                    new ResetWheelEncoderCommand(wheelID));
+        }
+
     }
 
     /**
@@ -43,6 +51,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
+        Drivetrain.getInstance().logEncoders();
     }
 
     /**
@@ -73,7 +82,6 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        Drivetrain.getInstance().logEncoders();
     }
 
     /**

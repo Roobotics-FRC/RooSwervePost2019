@@ -132,11 +132,21 @@ public class Drivetrain extends Subsystem {
      * This function should <b>NEVER</b> <i>regularly</i> be called.
      * It should be called once per mechanical change, with all wheels facing forward.
      */
-    private void resetEncoders() {
-        this.right1.resetAbsoluteEncoder();
-        this.right2.resetAbsoluteEncoder();
-        this.left1.resetAbsoluteEncoder();
-        this.left2.resetAbsoluteEncoder();
+    public void resetEncoder(WheelID wheelID) {
+        switch (wheelID) {
+            case RIGHT_1:
+                this.right1.resetAbsoluteEncoder();
+                break;
+            case RIGHT_2:
+                this.right2.resetAbsoluteEncoder();
+                break;
+            case LEFT_1:
+                this.left1.resetAbsoluteEncoder();
+                break;
+            case LEFT_2:
+                this.left2.resetAbsoluteEncoder();
+                break;
+        }
     }
 
     /**
