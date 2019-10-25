@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.Utils;
-import frc.team4373.robot.commands.teleop.*;
+import frc.team4373.robot.commands.teleop.DriveWithJoystick;
 import frc.team4373.robot.input.WheelVector;
 
 /**
@@ -133,19 +133,25 @@ public class Drivetrain extends Subsystem {
      * It should be called once per mechanical change, with all wheels facing forward.
      */
     public void resetEncoder(WheelID wheelID) {
+        getWheel(wheelID).resetAbsoluteEncoder();
+    }
+
+    public void setPID(WheelID wheelID, RobotMap.PID drivePID, RobotMap.PID rotatorPID) {
+        getWheel(wheelID).setPID(drivePID, rotatorPID);
+    }
+
+    private SwerveWheel getWheel(WheelID wheelID) {
         switch (wheelID) {
             case RIGHT_1:
-                this.right1.resetAbsoluteEncoder();
-                break;
+                return this.right1;
             case RIGHT_2:
-                this.right2.resetAbsoluteEncoder();
-                break;
+                return this.right2;
             case LEFT_1:
-                this.left1.resetAbsoluteEncoder();
-                break;
+                return this.left1;
             case LEFT_2:
-                this.left2.resetAbsoluteEncoder();
-                break;
+                return this.left2;
+            default:
+                return getWheel(WheelID.RIGHT_1);
         }
     }
 

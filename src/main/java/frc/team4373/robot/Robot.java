@@ -3,6 +3,7 @@ package frc.team4373.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.commands.util.ResetWheelEncoderCommand;
 import frc.team4373.robot.subsystems.Drivetrain;
@@ -16,6 +17,7 @@ import frc.team4373.robot.subsystems.Drivetrain;
  */
 public class Robot extends TimedRobot {
     private Command autonCommand = null;
+    SendableChooser<Drivetrain.WheelID> wheelChooser = new SendableChooser<>();
 
     /**
      * Constructor for the Robot class. Variable initialization occurs here;
@@ -37,8 +39,20 @@ public class Robot extends TimedRobot {
         for (Drivetrain.WheelID wheelID: Drivetrain.WheelID.values()) {
             SmartDashboard.putData("Reset " + wheelID.name() + " Enc",
                     new ResetWheelEncoderCommand(wheelID));
+            wheelChooser.addOption(wheelID.name(), wheelID);
         }
 
+        SmartDashboard.putData("Modified Wheel", wheelChooser);
+
+        SmartDashboard.putNumber("D kP", 0.25);
+        SmartDashboard.putNumber("D kI", 0.25);
+        SmartDashboard.putNumber("D kD", 0.25);
+        SmartDashboard.putNumber("D kF", 0.25);
+
+        SmartDashboard.putNumber("R kP", 0.25);
+        SmartDashboard.putNumber("R kI", 0.25);
+        SmartDashboard.putNumber("R kD", 0.25);
+        SmartDashboard.putNumber("R kF", 0.25);
     }
 
     /**
@@ -52,6 +66,23 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         Drivetrain.getInstance().logEncoders();
+        // SmartDashboard.getNumber("L1 R kP", 0.25);
+        // SmartDashboard.getNumber("L1 R kP", 0.25);
+        // SmartDashboard.getNumber("L1 R kP", 0.25);
+        // SmartDashboard.getNumber("L1 R kP", 0.25);
+        // SmartDashboard.getNumber("L1 R kP", 0.25);
+        // SmartDashboard.getNumber("L1 R kP", 0.25);
+        // SmartDashboard.getNumber("L1 R kP", 0.25);
+        // SmartDashboard.getNumber("L1 R kP", 0.25);
+        RobotMap.PID rotator = new RobotMap.PID(SmartDashboard.getNumber("R kF", 0.25),
+                SmartDashboard.getNumber("R kP", 0.25),
+                SmartDashboard.getNumber("R kI", 0.25),
+                SmartDashboard.getNumber("R kD", 0.25));
+        RobotMap.PID drive = new RobotMap.PID(SmartDashboard.getNumber("D kF", 0.25),
+                SmartDashboard.getNumber("D kP", 0.25),
+                SmartDashboard.getNumber("D kI", 0.25),
+                SmartDashboard.getNumber("D kD", 0.25));
+        Drivetrain.getInstance().setPID(wheelChooser.getSelected(), drive, rotator);
     }
 
     /**

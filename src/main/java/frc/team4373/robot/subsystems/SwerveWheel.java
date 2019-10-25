@@ -3,7 +3,6 @@ package frc.team4373.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.Utils;
 import frc.team4373.robot.input.WheelVector;
@@ -91,6 +90,29 @@ public class SwerveWheel {
             error = -(Math.signum(error) * (FULL_REVOLUTION_TICKS - Math.abs(error)));
         }
         this.rotatorMotor.set(ControlMode.Position, rawCurrent + error);
+    }
+
+    public void setPID(RobotMap.PID drivePID, RobotMap.PID rotatorPID) {
+        if (drivePID != null) {
+            setDrivePID(drivePID);
+        }
+        if (rotatorPID != null) {
+            setRotatorPID(rotatorPID);
+        }
+    }
+
+    private void setRotatorPID(RobotMap.PID pid) {
+        this.rotatorMotor.config_kP(0, pid.kP);
+        this.rotatorMotor.config_kI(0, pid.kI);
+        this.rotatorMotor.config_kD(0, pid.kD);
+        this.rotatorMotor.config_kF(0, pid.kF);
+    }
+
+    private void setDrivePID(RobotMap.PID pid) {
+        this.driveMotor.config_kP(0, pid.kP);
+        this.driveMotor.config_kI(0, pid.kI);
+        this.driveMotor.config_kD(0, pid.kD);
+        this.driveMotor.config_kF(0, pid.kF);
     }
 
     public void setPercentOutput(double speed, double heading) {
