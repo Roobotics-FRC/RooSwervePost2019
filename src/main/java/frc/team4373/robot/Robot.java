@@ -46,14 +46,14 @@ public class Robot extends TimedRobot {
         SmartDashboard.putData("Modified Wheel", wheelChooser);
 
         SmartDashboard.putNumber("D kP", 0.25);
-        SmartDashboard.putNumber("D kI", 0.25);
-        SmartDashboard.putNumber("D kD", 0.25);
-        SmartDashboard.putNumber("D kF", 0.25);
+        SmartDashboard.putNumber("D kI", 0);
+        SmartDashboard.putNumber("D kD", 0);
+        SmartDashboard.putNumber("D kF", 0);
 
-        SmartDashboard.putNumber("R kP", 0.25);
-        SmartDashboard.putNumber("R kI", 0.25);
-        SmartDashboard.putNumber("R kD", 0.25);
-        SmartDashboard.putNumber("R kF", 0.25);
+        SmartDashboard.putNumber("R kP", 1);
+        SmartDashboard.putNumber("R kI", 0);
+        SmartDashboard.putNumber("R kD", 0);
+        SmartDashboard.putNumber("R kF", 0);
 
         SmartDashboard.putData("Set Selected PID", new SetWheelPIDCommand());
     }
