@@ -1,7 +1,6 @@
 package frc.team4373.robot;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,6 +42,6 @@ class UtilsTest {
         assertEquals(Utils.leastResidue(0.5, 360), 0.5);
         assertEquals(Utils.leastResidue(360.5, 360), 0.5);
         assertEquals(Utils.leastResidue(-0.5, 2), 1.5);
-        assertEquals(Utils.leastResidue(0, 0), 0);
+        // assertThrows(IllegalArgumentException.class, () -> Utils.leastResidue(0, 0));
     }
 }
