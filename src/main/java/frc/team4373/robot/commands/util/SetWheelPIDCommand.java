@@ -16,9 +16,9 @@ public class SetWheelPIDCommand extends Command {
     @Override
     protected void execute() {
         RobotMap.PID rotator = new RobotMap.PID(SmartDashboard.getNumber("R kF", 0),
-                SmartDashboard.getNumber("R kP", 1),
+                SmartDashboard.getNumber("R kP", 3.5),
                 SmartDashboard.getNumber("R kI", 0),
-                SmartDashboard.getNumber("R kD", 0));
+                SmartDashboard.getNumber("R kD", 3));
         RobotMap.PID drive = new RobotMap.PID(SmartDashboard.getNumber("D kF", 0),
                 SmartDashboard.getNumber("D kP", 0.25),
                 SmartDashboard.getNumber("D kI", 0),

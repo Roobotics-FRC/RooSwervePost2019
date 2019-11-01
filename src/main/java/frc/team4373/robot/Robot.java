@@ -50,9 +50,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("D kD", 0);
         SmartDashboard.putNumber("D kF", 0);
 
-        SmartDashboard.putNumber("R kP", 1);
+        SmartDashboard.putNumber("R kP", 3.5);
         SmartDashboard.putNumber("R kI", 0);
-        SmartDashboard.putNumber("R kD", 0);
+        SmartDashboard.putNumber("R kD", 3);
         SmartDashboard.putNumber("R kF", 0);
 
         SmartDashboard.putData("Set Selected PID", new SetWheelPIDCommand());
