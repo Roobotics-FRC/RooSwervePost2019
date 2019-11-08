@@ -1,6 +1,8 @@
 package frc.team4373.robot.input;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
+import frc.team4373.robot.Utils;
 
 public class SwerveInputTransform {
     private static final double RADIUS = Math.sqrt(Math.pow(RobotMap.ROBOT_WHEELBASE, 2)
@@ -56,5 +58,12 @@ public class SwerveInputTransform {
         WheelVector right2 = new WheelVector(speeds[3], angles[3]);
 
         return new WheelVector[]{right1, left1, left2, right2};
+    }
+
+    public static WheelVector[] processTranslation(double x, double y) {
+        double angle = Utils.calculateYOffset(x, y);
+        double magnitude = Math.sqrt(x*x + y*y);
+        WheelVector vec = new WheelVector(magnitude, angle);
+        return new WheelVector[]{vec, vec, vec, vec};
     }
 }

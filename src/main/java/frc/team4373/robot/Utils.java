@@ -19,6 +19,10 @@ public final class Utils {
      * @return the normalized angle from the y-axis to the point, in degrees.
      */
     public static double calculateYOffset(double x, double y) {
+        // edge case b/c atan2 returns 0 instead of 90 for (0, 0)
+        if (x == 0 && y == 0) {
+            return 0;
+        }
         return Utils.normalizeAngle(90 - Math.toDegrees(Math.atan2(y, x)));
 
         // // Compute the angle relative to the y-axis (90°)

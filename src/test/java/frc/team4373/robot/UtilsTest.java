@@ -18,6 +18,10 @@ class UtilsTest {
 
     @Test
     void calculateYOffset() {
+        assertEquals(Utils.calculateYOffset(0, 0), 0);
+        assertEquals(Utils.calculateYOffset(0, -0), 0);
+        assertEquals(Utils.calculateYOffset(-0, 0), 0);
+        assertEquals(Utils.calculateYOffset(-0, -0), 0);
         assertEquals(Utils.calculateYOffset(0, 0.8), 0);
         assertEquals(Utils.calculateYOffset(1, 1), 45);
         assertEquals(Utils.calculateYOffset(Math.sqrt(3) / 3, 1 / 3d), 60);

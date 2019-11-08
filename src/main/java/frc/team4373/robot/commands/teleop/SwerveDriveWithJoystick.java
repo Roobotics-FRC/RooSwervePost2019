@@ -23,7 +23,7 @@ public class SwerveDriveWithJoystick extends Command {
 
     @Override
     protected void execute() {
-        double x = -OI.getInstance().getDriveJoystick().rooGetX();
+        double x = OI.getInstance().getDriveJoystick().rooGetX();
         double y = -OI.getInstance().getDriveJoystick().rooGetY();
         double z = OI.getInstance().getDriveJoystick().rooGetZFiltered();
         WheelVector[] vectors = SwerveInputTransform.process(z, x, y, drivetrain.getAngle());
