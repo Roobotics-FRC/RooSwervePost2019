@@ -61,9 +61,15 @@ public class SwerveInputTransform {
         return new WheelVector.VectorSet(right1, right2, left1, left2);
     }
 
+    /**
+     * Processes x-y input from the joystick to produce translational-only movement vectors.
+     * @param x the x-coordinate of the joystick's position (right-positive).
+     * @param y the y-coordinate of the joystick's position (forward-positive).
+     * @return a {@link WheelVector.VectorSet} of translational movement vectors.
+     */
     public static WheelVector.VectorSet processTranslation(double x, double y) {
         double angle = Utils.calculateYOffset(x, y);
-        double magnitude = Math.sqrt(x*x + y*y);
+        double magnitude = Math.sqrt(x * x + y * y);
         WheelVector vec = new WheelVector(magnitude, angle);
         return new WheelVector.VectorSet(vec, vec, vec, vec);
     }

@@ -92,6 +92,13 @@ public class SwerveWheel {
         this.rotatorMotor.set(ControlMode.Position, rawCurrent + error);
     }
 
+    /**
+     * Sets drive and rotator PID gains.
+     * @param drivePID a {@link RobotMap.PID} object containing new parameters for the drive PID,
+     *                 or null to leave unchanged.
+     * @param rotatorPID a {@link RobotMap.PID} object containing parameters for rotational PID,
+     *                   or null to leave unchanged.
+     */
     public void setPID(RobotMap.PID drivePID, RobotMap.PID rotatorPID) {
         if (drivePID != null) {
             setDrivePID(drivePID);

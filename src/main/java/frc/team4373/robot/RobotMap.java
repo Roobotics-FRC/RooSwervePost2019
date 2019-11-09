@@ -112,6 +112,13 @@ public final class RobotMap {
         public final double kI;
         public final double kD;
 
+        /**
+         * Constructs a new PID parameters object.
+         * @param kF feed-forward gain.
+         * @param kP proportional gain.
+         * @param kI integral gain.
+         * @param kD derivative gain.
+         */
         public PID(double kF, double kP, double kI, double kD) {
             this.kF = kF;
             this.kP = kP;
