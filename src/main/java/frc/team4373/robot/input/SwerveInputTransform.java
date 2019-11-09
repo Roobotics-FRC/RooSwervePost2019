@@ -19,7 +19,8 @@ public class SwerveInputTransform {
      * @param y The y coordinate of the joystick (forward is positive)
      * @param imuAngle The angle of the gyro (IMU)
      */
-    public static WheelVector[] process(double rotation, double x, double y, double imuAngle) {
+    public static WheelVector.VectorSet process(double rotation, double x, double y,
+                                                double imuAngle) {
         double angle = Math.toRadians(imuAngle);
 
         final double temp = y * Math.cos(angle) + x * Math.sin(angle);
@@ -57,13 +58,13 @@ public class SwerveInputTransform {
         WheelVector left2 = new WheelVector(speeds[2], angles[2]);
         WheelVector right2 = new WheelVector(speeds[3], angles[3]);
 
-        return new WheelVector[]{right1, left1, left2, right2};
+        return new WheelVector.VectorSet(right1, right2, left1, left2);
     }
 
-    public static WheelVector[] processTranslation(double x, double y) {
+    public static WheelVector.VectorSet processTranslation(double x, double y) {
         double angle = Utils.calculateYOffset(x, y);
         double magnitude = Math.sqrt(x*x + y*y);
         WheelVector vec = new WheelVector(magnitude, angle);
-        return new WheelVector[]{vec, vec, vec, vec};
+        return new WheelVector.VectorSet(vec, vec, vec, vec);
     }
 }

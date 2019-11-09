@@ -22,7 +22,7 @@ public class DriveWithJoystick extends Command {
         double twist = OI.getInstance().getDriveJoystick().rooGetZ();
         double forward = OI.getInstance().getDriveJoystick().rooGetY();
         WheelVector vec = new WheelVector(forward, twist);
-        this.drivetrain.setWheelsPercOut(new WheelVector[]{vec, vec, vec, vec});
+        this.drivetrain.setWheelsPercOut(new WheelVector.VectorSet(vec, vec, vec, vec));
     }
 
     @Override

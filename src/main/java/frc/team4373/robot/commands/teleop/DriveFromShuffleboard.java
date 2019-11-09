@@ -45,13 +45,13 @@ public class DriveFromShuffleboard extends Command {
         WheelVector vecr2 = new WheelVector(SmartDashboard.getNumber("R2 Vel", 0),
                 SmartDashboard.getNumber("R2 Ang", 0));
 
-        WheelVector[] arr = new WheelVector[]{vecr1, vecl1, vecl2, vecr2};
-        SmartDashboard.putString("vectors", Arrays.toString(arr));
+        WheelVector.VectorSet vectors = new WheelVector.VectorSet(vecr1, vecr2, vecl1, vecl2);
+        SmartDashboard.putString("vectors", vectors.toString());
 
         if (SmartDashboard.getBoolean("Closed Loop", false)) {
-            this.drivetrain.setWheelsPID(arr);
+            this.drivetrain.setWheelsPID(vectors);
         } else {
-            this.drivetrain.setWheelsPercOut(arr);
+            this.drivetrain.setWheelsPercOut(vectors);
         }
     }
 

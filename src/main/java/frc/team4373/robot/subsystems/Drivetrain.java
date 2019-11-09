@@ -1,7 +1,6 @@
 package frc.team4373.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
@@ -82,37 +81,29 @@ public class Drivetrain extends Subsystem {
      * Sets velocity vectors to the four SwerveWheels with PID setpoints for both speed and angle.
      * @param vectors the four vectors ordered right1, left1, left2, right2.
      */
-    public void setWheelsPID(WheelVector[] vectors) {
-        if (vectors.length == 4) {
-            if (vectors[0] != null) this.right1.set(vectors[0].speed, vectors[0].angle);
-            if (vectors[1] != null) this.left1.set(vectors[1].speed, vectors[1].angle);
-            if (vectors[2] != null) this.left2.set(vectors[2].speed, vectors[2].angle);
-            if (vectors[3] != null) this.right2.set(vectors[3].speed, vectors[3].angle);
-        } else {
-            DriverStation.reportError("Invalid array passed to setWheelsPID", false);
-        }
+    public void setWheelsPID(WheelVector.VectorSet vectors) {
+        if (vectors.right1 != null) this.right1.set(vectors.right1.speed, vectors.right1.angle);
+        if (vectors.right2 != null) this.right2.set(vectors.right2.speed, vectors.right2.angle);
+        if (vectors.left1 != null) this.left1.set(vectors.left1.speed, vectors.left1.angle);
+        if (vectors.left2 != null) this.left2.set(vectors.left2.speed, vectors.left2.angle);
     }
 
     /**
      * Sets vectors to the SwerveWheels with a PID setpoint for angle and % output for speed.
      * @param vectors the four vectors ordered right1, left1, left2, right2.
      */
-    public void setWheelsPercOut(WheelVector[] vectors) {
-        if (vectors.length == 4) {
-            if (vectors[0] != null) {
-                this.right1.setPercentOutput(vectors[0].speed, vectors[0].angle);
-            }
-            if (vectors[1] != null) {
-                this.left1.setPercentOutput(vectors[1].speed, vectors[1].angle);
-            }
-            if (vectors[2] != null) {
-                this.left2.setPercentOutput(vectors[2].speed, vectors[2].angle);
-            }
-            if (vectors[3] != null) {
-                this.right2.setPercentOutput(vectors[3].speed, vectors[3].angle);
-            }
-        } else {
-            DriverStation.reportError("Invalid array passed to setWheelsPercOut", false);
+    public void setWheelsPercOut(WheelVector.VectorSet vectors) {
+        if (vectors.right1 != null) {
+            this.right1.setPercentOutput(vectors.right1.speed, vectors.right1.angle);
+        }
+        if (vectors.right2 != null) {
+            this.right2.setPercentOutput(vectors.right2.speed, vectors.right2.angle);
+        }
+        if (vectors.left1 != null) {
+            this.left1.setPercentOutput(vectors.left1.speed, vectors.left1.angle);
+        }
+        if (vectors.left2 != null) {
+            this.left2.setPercentOutput(vectors.left2.speed, vectors.left2.angle);
         }
     }
 
