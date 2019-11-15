@@ -5,9 +5,6 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * A Javadoc template. TODO: Update SwerveInputTransformTest Javadoc.
- */
 class SwerveInputTransformTest {
 
     @BeforeEach
