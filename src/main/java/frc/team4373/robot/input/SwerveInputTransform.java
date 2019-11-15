@@ -73,4 +73,23 @@ public class SwerveInputTransform {
         WheelVector vec = new WheelVector(magnitude, angle);
         return new WheelVector.VectorSet(vec, vec, vec, vec);
     }
+
+    /**
+     * Processes rotational input from the joystick to produce rotational-only movement vectors.
+     * @param rate the rate of rotation, [-1, 1].
+     * @return a {@link WheelVector.VectorSet} of rotational movement vectors.
+     */
+    public static WheelVector.VectorSet processRotation(double rate) {
+        double refAngle = Math.toDegrees(Math.atan2(RobotMap.ROBOT_TRACKWIDTH / 2,
+                RobotMap.ROBOT_WHEELBASE / 2));
+        double r1Angle = -(90 - refAngle);
+        double l1Angle = -(90 + refAngle);
+        double l2Angle = 90 + refAngle;
+        double r2Angle = 90 - refAngle;
+        WheelVector r1 = new WheelVector(rate, r1Angle);
+        WheelVector r2 = new WheelVector(rate, r2Angle);
+        WheelVector l1 = new WheelVector(rate, l1Angle);
+        WheelVector l2 = new WheelVector(rate, l2Angle);
+        return new WheelVector.VectorSet(r1, r2, l1, l2);
+    }
 }
