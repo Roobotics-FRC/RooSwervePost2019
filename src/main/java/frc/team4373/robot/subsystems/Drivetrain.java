@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.Utils;
-import frc.team4373.robot.commands.teleop.DriveWithJoystick;
+import frc.team4373.robot.commands.teleop.SwerveDriveWithJoystick;
 import frc.team4373.robot.input.WheelVector;
 
 /**
@@ -147,6 +147,13 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
+     * Resets the pigeon's yaw to consider the current orientation field-forward.
+     */
+    public void resetPigeonYaw() {
+        this.pigeon.setYaw(0);
+    }
+
+    /**
      * Logs encoder values to SmartDashboard.
      */
     public void logEncoders() {
@@ -158,6 +165,6 @@ public class Drivetrain extends Subsystem {
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new DriveWithJoystick());
+        setDefaultCommand(new SwerveDriveWithJoystick());
     }
 }

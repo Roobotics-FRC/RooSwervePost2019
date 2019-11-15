@@ -19,6 +19,7 @@ public final class RobotMap {
 
     // Buttons
     public static final int BUTTON_SWERVE_DRIVE_WITH_JOYSTICK = 7;
+    public static final int BUTTON_RESET_ORIENTATION = 4;
     public static final int BUTTON_DRIVE_FROM_SHUFFLEBOARD = 8;
     public static final int BUTTON_DRIVE_WITH_JOYSTICK = 9;
     public static final int BUTTON_KILL_AUTONS = 10;

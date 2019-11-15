@@ -1,6 +1,7 @@
 package frc.team4373.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.input.OI;
 import frc.team4373.robot.input.SwerveInputTransform;
 import frc.team4373.robot.input.WheelVector;
@@ -28,9 +29,10 @@ public class SwerveDriveWithJoystick extends Command {
         double z = OI.getInstance().getDriveJoystick().rooGetZFiltered();
         WheelVector.VectorSet vectors = SwerveInputTransform.process(z, x, y,
                 drivetrain.getAngle());
-        // // double angle = Utils.calculateYOffset(x, y);
-        // double angle = OI.getInstance().getDriveJoystick().getAngle();
         drivetrain.setWheelsPID(vectors);
+        if (OI.getInstance().getDriveJoystick().getRawButton(RobotMap.BUTTON_RESET_ORIENTATION)) {
+            drivetrain.resetPigeonYaw();
+        }
     }
 
     @Override
