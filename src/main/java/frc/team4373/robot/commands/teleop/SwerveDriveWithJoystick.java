@@ -25,7 +25,7 @@ public class SwerveDriveWithJoystick extends Command {
     protected void execute() {
         double x = OI.getInstance().getDriveJoystick().rooGetX();
         double y = -OI.getInstance().getDriveJoystick().rooGetY();
-        double z = -OI.getInstance().getDriveJoystick().rooGetZFiltered();
+        double z = OI.getInstance().getDriveJoystick().rooGetZFiltered();
         WheelVector.VectorSet vectors = SwerveInputTransform.process(z, x, y,
                 drivetrain.getAngle());
         // // double angle = Utils.calculateYOffset(x, y);
