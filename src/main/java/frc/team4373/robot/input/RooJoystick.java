@@ -52,7 +52,10 @@ public class RooJoystick<F extends DoubleTypeFilter> extends Joystick {
      */
     private double filter(double val) {
         // We don't know the return type because of type erasure...
-        return applyDeadzone(this.filter.applyFilter(val));
+        if (this.filter != null) {
+            return applyDeadzone(this.filter.applyFilter(val));
+        }
+        return applyDeadzone(val);
     }
 
     /**
