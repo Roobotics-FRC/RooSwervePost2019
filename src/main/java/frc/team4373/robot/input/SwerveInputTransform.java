@@ -95,10 +95,10 @@ public class SwerveInputTransform {
     public static WheelVector.VectorSet processRotation(double rate) {
         double refAngle = Math.toDegrees(Math.atan2(RobotMap.ROBOT_TRACKWIDTH / 2,
                 RobotMap.ROBOT_WHEELBASE / 2));
-        double r1Angle = -(90 - refAngle);
-        double l1Angle = -(90 + refAngle);
-        double l2Angle = 90 + refAngle;
-        double r2Angle = 90 - refAngle;
+        double r1Angle = 90 + refAngle;
+        double l1Angle = 90 - refAngle;
+        double l2Angle = -(90 - refAngle);
+        double r2Angle = -(90 + refAngle);
         WheelVector r1 = new WheelVector(rate, r1Angle);
         WheelVector r2 = new WheelVector(rate, r2Angle);
         WheelVector l1 = new WheelVector(rate, l1Angle);
