@@ -17,14 +17,14 @@ class SwerveInputTransformTest {
 
     @Test
     void process() {
-        WheelVector.VectorSet set = SwerveInputTransform.process(0, 0, 1, 0);
+        WheelVector.VectorSet set = SwerveInputTransform.processNorthUp(0, 0, 1, 0);
         assertTrue(set.equals(new WheelVector.VectorSet(
                 new WheelVector(1, 0),
                 new WheelVector(1, 0),
                 new WheelVector(1, 0),
                 new WheelVector(1, 0))));
 
-        WheelVector.VectorSet set2 = SwerveInputTransform.process(0, 1, 0, 0);
+        WheelVector.VectorSet set2 = SwerveInputTransform.processNorthUp(0, 1, 0, 0);
         assertTrue(set2.equals(new WheelVector.VectorSet(
                 new WheelVector(1, 90),
                 new WheelVector(1, 90),
@@ -32,7 +32,7 @@ class SwerveInputTransformTest {
                 new WheelVector(1, 90))));
 
 
-        WheelVector.VectorSet set3 = SwerveInputTransform.process(0, 1, 0, -90);
+        WheelVector.VectorSet set3 = SwerveInputTransform.processNorthUp(0, 1, 0, -90);
         assertTrue(set3.equals(new WheelVector.VectorSet(
                 new WheelVector(1, 180),
                 new WheelVector(1, 180),

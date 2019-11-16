@@ -27,7 +27,7 @@ public class SwerveDriveWithJoystick extends Command {
         double x = OI.getInstance().getDriveJoystick().rooGetX();
         double y = -OI.getInstance().getDriveJoystick().rooGetY();
         double z = OI.getInstance().getDriveJoystick().rooGetZFiltered();
-        WheelVector.VectorSet vectors = SwerveInputTransform.process(z, x, y,
+        WheelVector.VectorSet vectors = SwerveInputTransform.processNorthUp(z, x, y,
                 drivetrain.getAngle());
         drivetrain.setWheelsPID(vectors);
         if (OI.getInstance().getDriveJoystick().getRawButton(RobotMap.BUTTON_RESET_ORIENTATION)) {

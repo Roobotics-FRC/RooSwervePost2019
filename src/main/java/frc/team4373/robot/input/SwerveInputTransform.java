@@ -1,6 +1,5 @@
 package frc.team4373.robot.input;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.Utils;
 
@@ -10,30 +9,44 @@ public class SwerveInputTransform {
     private static final double LR = RobotMap.ROBOT_WHEELBASE / RADIUS;
     private static final double WR = (RobotMap.ROBOT_TRACKWIDTH / RADIUS);
 
+    private static double[] speeds = new double[RobotMap.WHEEL_COUNT];
+    private static double[] angles = new double[RobotMap.WHEEL_COUNT];
+
     /**
-     * Produces swerve velocity vectors using the given inputs.
+     * Produces swerve velocity vectors relative to the field for the given input.
      *
      * <p>See https://www.chiefdelphi.com/t/107383
-     * @param rotation The rotation of the joystick (CW is positive)
-     * @param x The x coordinate of the joystick (right is positive)
-     * @param y The y coordinate of the joystick (forward is positive)
-     * @param imuAngle The angle of the gyro (IMU)
+     * @param rotation the rotation of the joystick (CW is positive)
+     * @param x the x coordinate of the joystick (right is positive)
+     * @param y the y coordinate of the joystick (forward is positive)
+     * @param imuAngle the current heading of the robot
+     * @return a {@link WheelVector.VectorSet} of velocity vectors.
      */
-    public static WheelVector.VectorSet process(double rotation, double x, double y,
-                                                double imuAngle) {
+    public static WheelVector.VectorSet processNorthUp(double rotation, double x, double y,
+                                                       double imuAngle) {
         double angle = Math.toRadians(imuAngle);
 
         final double temp = y * Math.cos(angle) + x * Math.sin(angle);
+        // TODO: why are the signs flipped here?
         x = -y * Math.sin(angle) + x * Math.cos(angle);
         y = temp;
 
+        return processOwnShipUp(rotation, x, y);
+    }
+
+    /**
+     * Produces swerve velocity vectors relative to the robot for the given inputs.
+     *
+     * @param rotation the rotation of the joystick (CW is positive)
+     * @param x the x coordinate of the joystick (right is positive)
+     * @param y the y coordinate of the joystick (forward is positive)
+     * @return a {@link WheelVector.VectorSet} of velocity vectors.
+     */
+    public static WheelVector.VectorSet processOwnShipUp(double rotation, double x, double y) {
         final double A = x - rotation * LR;
         final double B = x + rotation * LR;
         final double C = y - rotation * WR;
         final double D = y + rotation * WR;
-
-        double[] speeds = new double[4];
-        double[] angles = new double[4];
 
         speeds[0] = Math.sqrt(Math.pow(B, 2) + Math.pow(C, 2)); //front right
         speeds[1] = Math.sqrt(Math.pow(B, 2) + Math.pow(D, 2)); // front left
