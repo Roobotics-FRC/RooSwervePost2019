@@ -8,7 +8,7 @@ import frc.team4373.robot.subsystems.Drivetrain;
 import java.util.Arrays;
 
 /**
- * A Javadoc template. TODO: Update DriveFromShuffleboard Javadoc.
+ * Allows for control of the swerve drive using Shuffleboard.
  */
 public class DriveFromShuffleboard extends Command {
     private Drivetrain drivetrain;

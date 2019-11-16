@@ -10,52 +10,33 @@ import frc.team4373.robot.subsystems.Drivetrain;
 public final class RobotMap {
     private RobotMap() {}
 
-    public static final double ROBOT_WHEELBASE = 27; //units don't matter, as only ratios are used
-    public static final double ROBOT_TRACKWIDTH = 22; //however, these are in inches
+    // Physical measurements
+    // These are in inches, but units don't matter; only ratios are used
+    public static final double ROBOT_TRACKWIDTH = 22;
+    public static final double ROBOT_WHEELBASE = 27;
 
     // OI devices
     public static final int DRIVE_JOYSTICK_PORT = 0;
     public static final int OPERATOR_JOYSTICK_PORT = 1;
 
     // Buttons
-    public static final int BUTTON_SWERVE_DRIVE_WITH_JOYSTICK = 7;
-    public static final int BUTTON_RESET_ORIENTATION = 4;
     public static final int BUTTON_DRIVE_FROM_SHUFFLEBOARD = 8;
     public static final int BUTTON_DRIVE_WITH_JOYSTICK = 9;
     public static final int BUTTON_KILL_AUTONS = 10;
+    public static final int BUTTON_RESET_ORIENTATION = 4;
+    public static final int BUTTON_SWERVE_DRIVE_WITH_JOYSTICK = 7;
 
     // Wheels et al.
     public static final double MAX_WHEEL_SPEED = 8400; // TODO: calculate this
-    public static final double WHEEL_ENCODER_TICKS = 4096;
     public static final int PID_IDX = 0;
-    public static final double DEGREES_TO_PIGEON_UNITS = 8192d / 360d;
+    public static final int WHEEL_COUNT = 4;
+    public static final double WHEEL_ENCODER_TICKS = 4096;
+
+    // Conversion factors
     public static final double DEGREES_TO_ENCODER_UNITS = 4096d / 360d;
+    public static final double DEGREES_TO_PIGEON_UNITS = 8192d / 360d;
 
-    public static final class MotorConfig {
-        public final int port;
-        public final boolean inverted;
-        public final NeutralMode neutralMode;
-        public final boolean encoderPhase;
-        public final PID gains;
-
-        /**
-         * Constructs a new MotorConfig.
-         * @param port the port to which the motor is attached.
-         * @param inverted whether to invert motor output values.
-         * @param neutralMode the motor's passive neutral mode.
-         */
-        public MotorConfig(int port, boolean inverted,
-                           NeutralMode neutralMode, boolean encoderPhase, PID gains) {
-            this.port = port;
-            this.inverted = inverted;
-            this.neutralMode = neutralMode;
-            this.encoderPhase = encoderPhase;
-            this.gains = gains;
-        }
-
-    }
-
-    // Motor CAN chain identifiers
+    // CAN chain identifiers
     public static final int PIGEON_PORT = 19;
 
     /**
@@ -104,6 +85,30 @@ public final class RobotMap {
             default:
                 return getRotatorMotorConfig(Drivetrain.WheelID.LEFT_1);
         }
+    }
+
+    public static final class MotorConfig {
+        public final int port;
+        public final boolean inverted;
+        public final NeutralMode neutralMode;
+        public final boolean encoderPhase;
+        public final PID gains;
+
+        /**
+         * Constructs a new MotorConfig.
+         * @param port the port to which the motor is attached.
+         * @param inverted whether to invert motor output values.
+         * @param neutralMode the motor's passive neutral mode.
+         */
+        public MotorConfig(int port, boolean inverted,
+                           NeutralMode neutralMode, boolean encoderPhase, PID gains) {
+            this.port = port;
+            this.inverted = inverted;
+            this.neutralMode = neutralMode;
+            this.encoderPhase = encoderPhase;
+            this.gains = gains;
+        }
+
     }
 
     // PID- and sensor-related constants
