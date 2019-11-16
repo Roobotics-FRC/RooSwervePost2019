@@ -1,12 +1,17 @@
 package frc.team4373.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.google.gson.Gson;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.Utils;
 import frc.team4373.robot.commands.teleop.SwerveDriveWithJoystick;
 import frc.team4373.robot.input.WheelVector;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * A programmatic representation of the robot's drivetrain.
@@ -33,11 +38,26 @@ public class Drivetrain extends Subsystem {
         RIGHT_1, RIGHT_2, LEFT_1, LEFT_2
     }
 
+    private class EncoderOffsets {
+        double right1;
+        double right2;
+        double left1;
+        double left2;
+
+        public EncoderOffsets(double right1, double right2, double left1, double left2) {
+            this.right1 = right1;
+            this.right2 = right2;
+            this.left1 = left1;
+            this.left2 = left2;
+        }
+    }
+
     private SwerveWheel right1;
     private SwerveWheel right2;
     private SwerveWheel left1;
     private SwerveWheel left2;
     private PigeonIMU pigeon;
+    private EncoderOffsets offsets;
     private double initialAngle;
 
     private Drivetrain() {
@@ -48,6 +68,25 @@ public class Drivetrain extends Subsystem {
 
         this.pigeon = new PigeonIMU(RobotMap.PIGEON_PORT);
         this.initialAngle = getPigeonYaw();
+
+        Path configPath = Path.of(RobotMap.ENC_OFFSET_CONFIG_PATH);
+        if (Files.exists(configPath)) {
+            try {
+                String configJson = Files.readString(configPath);
+                Gson gson = new Gson();
+                this.offsets = gson.fromJson(configJson, EncoderOffsets.class);
+            } catch (Exception e) {
+                DriverStation.reportError("Failed to fetch encoder offsets with error:\n"
+                        + e.getLocalizedMessage(), true);
+            }
+        } else {
+            this.offsets = new EncoderOffsets(0, 0, 0, 0);
+        }
+
+        this.right1.setRotationOffset(this.offsets.right1);
+        this.right2.setRotationOffset(this.offsets.right2);
+        this.left1.setRotationOffset(this.offsets.left1);
+        this.right2.setRotationOffset(this.offsets.left2);
     }
 
     /**
@@ -108,7 +147,7 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
-     * Resets the encoders to within [-4095, 4095]
+     * Resets the encoders to within [-4095, 4095].
      * Call this method in `robotInit` to (almost) eliminate the possibility of
      *  accumulator rollover during one power cycle.
      */
@@ -120,17 +159,61 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
-     * This function should <b>NEVER</b> <i>regularly</i> be called.
-     * It should be called once per mechanical change, with all wheels facing forward.
+     * Sets the current position of the rotational encoder on the specified wheel to be considered
+     * forward and persists this configuration to disk.
+     *
+     * <p>This function should <b>NEVER</b> <i>regularly</i> be called.
+     * It should be called once per mechanical change with the indicated wheel facing forward.
+     * @param wheelID the ID of the wheel whose encoder position to reset.
      */
     public void resetEncoder(WheelID wheelID) {
-        getWheel(wheelID).resetAbsoluteEncoder();
+        // Persist this offset to disk
+        double curRot = getWheel(wheelID).getRotation();
+        switch (wheelID) {
+            case RIGHT_1:
+                this.offsets.right1 = curRot;
+                break;
+            case RIGHT_2:
+                this.offsets.right2 = curRot;
+                break;
+            case LEFT_1:
+                this.offsets.left1 = curRot;
+                break;
+            case LEFT_2:
+                this.offsets.left2 = curRot;
+                break;
+            default:
+                break;
+        }
+        Gson gson = new Gson();
+        Path configPath = Path.of(RobotMap.ENC_OFFSET_CONFIG_PATH);
+        try {
+            Files.writeString(configPath, gson.toJson(this.offsets));
+        } catch (Exception e) {
+            DriverStation.reportError("Unable to persist offset in memory."
+                    + "Calibration will be lost upon power cycle. Exception details are below:\n"
+                    + e.getLocalizedMessage(), true);
+        }
+
+        // Set the encoder position on the wheel to zero at this location
+        getWheel(wheelID).setRotationOffset(curRot);
     }
 
+    /**
+     * Sets PID gains for the specified {@link SwerveWheel}.
+     * @param wheelID the ID whose gains to modify.
+     * @param drivePID the PID gains for the speed loop.
+     * @param rotatorPID the PID gains for the rotational loop.
+     */
     public void setPID(WheelID wheelID, RobotMap.PID drivePID, RobotMap.PID rotatorPID) {
         getWheel(wheelID).setPID(drivePID, rotatorPID);
     }
 
+    /**
+     * Returns the {@link SwerveWheel} at the specified position.
+     * @param wheelID the ID of the wheel to fetch.
+     * @return the indicated wheel object.
+     */
     private SwerveWheel getWheel(WheelID wheelID) {
         switch (wheelID) {
             case RIGHT_1:

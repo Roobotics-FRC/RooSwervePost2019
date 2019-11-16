@@ -27,6 +27,7 @@ public final class RobotMap {
     public static final int BUTTON_SWERVE_DRIVE_WITH_JOYSTICK = 7;
 
     // Wheels et al.
+    public static final String ENC_OFFSET_CONFIG_PATH = "/home/lvuser/encoder_offset_config.json";
     public static final double MAX_WHEEL_SPEED = 8400; // TODO: calculate this
     public static final int PID_IDX = 0;
     public static final int WHEEL_COUNT = 4;
@@ -38,6 +39,9 @@ public final class RobotMap {
 
     // CAN chain identifiers
     public static final int PIGEON_PORT = 19;
+
+    // Timeouts
+    public static final int TALON_TIMEOUT_MS = 1000;
 
     /**
      * Gets the drive motor configuration for the specified wheel.

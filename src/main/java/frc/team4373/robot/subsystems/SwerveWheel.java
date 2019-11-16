@@ -13,11 +13,12 @@ import frc.team4373.robot.input.WheelVector;
 public class SwerveWheel {
     private WPI_TalonSRX driveMotor;
     private WPI_TalonSRX rotatorMotor;
+    private double encoderOffset = 0;
     private static final double HALF_REVOLUTION_TICKS = 180 * RobotMap.DEGREES_TO_ENCODER_UNITS;
     private static final double FULL_REVOLUTION_TICKS = 360 * RobotMap.DEGREES_TO_ENCODER_UNITS;
 
     /**
-     * Constructs a new sweve wheel for the specified wheel.
+     * Constructs a new swerve wheel for the specified wheel.
      * @param wheelID the wheel to construct.
      */
     public SwerveWheel(Drivetrain.WheelID wheelID) {
@@ -38,7 +39,7 @@ public class SwerveWheel {
 
         this.driveMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         this.rotatorMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-        this.rotatorMotor.configFeedbackNotContinuous(false, 1000);
+        this.rotatorMotor.configFeedbackNotContinuous(false, RobotMap.TALON_TIMEOUT_MS);
 
         this.driveMotor.config_kF(RobotMap.PID_IDX, driveMotorConfig.gains.kF);
         this.driveMotor.config_kP(RobotMap.PID_IDX, driveMotorConfig.gains.kP);
@@ -82,7 +83,7 @@ public class SwerveWheel {
      * @param heading The heading, in degrees, at which to angle the wheel.
      */
     private void setHeading(double heading) {
-        double rawCurrent = this.rotatorMotor.getSelectedSensorPosition();
+        double rawCurrent = this.getRotation() - this.encoderOffset;
         double current = Utils.leastResidue(rawCurrent, 4096);
         double target = heading * RobotMap.DEGREES_TO_ENCODER_UNITS;
         double error = target - current;
@@ -108,6 +109,10 @@ public class SwerveWheel {
         }
     }
 
+    /**
+     * Sets PID gains to the rotator motor.
+     * @param pid the PID gains for the rotator motor.
+     */
     private void setRotatorPID(RobotMap.PID pid) {
         this.rotatorMotor.config_kP(0, pid.kP);
         this.rotatorMotor.config_kI(0, pid.kI);
@@ -115,6 +120,10 @@ public class SwerveWheel {
         this.rotatorMotor.config_kF(0, pid.kF);
     }
 
+    /**
+     * Sets PID gains to the drive motor.
+     * @param pid the PID gains for the drive motor.
+     */
     private void setDrivePID(RobotMap.PID pid) {
         this.driveMotor.config_kP(0, pid.kP);
         this.driveMotor.config_kI(0, pid.kI);
@@ -122,7 +131,13 @@ public class SwerveWheel {
         this.driveMotor.config_kF(0, pid.kF);
     }
 
+    /**
+     * Sets the percent output of the drive and rotator motors.
+     * @param speed the percent output [-1, 1] of the drive motor.
+     * @param heading the percent output [-1, 1] of the rotator motor.
+     */
     public void setPercentOutput(double speed, double heading) {
+        // TODO: safety check speeds
         this.driveMotor.set(ControlMode.PercentOutput, speed);
         this.rotatorMotor.set(ControlMode.PercentOutput, heading);
     }
@@ -135,17 +150,41 @@ public class SwerveWheel {
         this.rotatorMotor.set(ControlMode.PercentOutput, 0);
     }
 
+    /**
+     * Gets the current rotation of the rotator motor in encoder units.
+     * @return the current rotation in encoder units.
+     */
+    public double getRotation() {
+        return this.rotatorMotor.getSelectedSensorPosition();
+    }
+
+    /**
+     * Returns the current encoder values as a {@link WheelVector}.
+     * <p>Note that the units of the vector are incorrect (encoder units rather than
+     * percent/degrees).</p>
+     *
+     * @return a vector containing the current encoder values in encoder units.
+     */
     public WheelVector encoderValues() {
+        // TODO: this should not be a WheelVector because its units do not match those of the type
         return new WheelVector(driveMotor.getSelectedSensorVelocity(),
                 rotatorMotor.getSelectedSensorPosition());
     }
 
+    /**
+     * Sets the encoder's current position to be equal to its least residue
+     * mod the number of units in one revolution.
+     */
     public void modularizeAbsoluteEncoder() {
         this.rotatorMotor.setSelectedSensorPosition(
                 (int) (this.rotatorMotor.getSelectedSensorPosition() % FULL_REVOLUTION_TICKS));
     }
 
-    public void resetAbsoluteEncoder() {
-        this.rotatorMotor.setSelectedSensorPosition(0);
+    /**
+     * Resets the rotator encoder offset such that the specified heading is considered 0.
+     * @param offset the raw encoder value to consider as forward (0).
+     */
+    public void setRotationOffset(double offset) {
+        this.encoderOffset = offset;
     }
 }
