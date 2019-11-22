@@ -7,6 +7,8 @@ import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.Utils;
 import frc.team4373.robot.input.WheelVector;
 
+import static com.ctre.phoenix.motorcontrol.ControlMode.MotionMagic;
+
 /**
  * Represents a swerve wheel with two motors.
  */
@@ -15,6 +17,7 @@ public class SwerveWheel {
     private WPI_TalonSRX rotatorMotor;
     private static final double HALF_REVOLUTION_TICKS = 180 * RobotMap.DEGREES_TO_ENCODER_UNITS;
     private static final double FULL_REVOLUTION_TICKS = 360 * RobotMap.DEGREES_TO_ENCODER_UNITS;
+    private boolean isInverted = false;
 
     /**
      * Constructs a new sweve wheel for the specified wheel.
@@ -57,39 +60,26 @@ public class SwerveWheel {
      * @param speed the percent of maximum speed at which to drive.
      */
     public void set(double speed, double heading) {
-        /*
+        if (speed == 0) {
+            this.driveMotor.set(ControlMode.PercentOutput, 0);
+            return;
+        }
+
+        heading *= RobotMap.DEGREES_TO_ENCODER_UNITS;
+
+        double currentRotation = rotatorMotor.getSelectedSensorPosition();
+        double rotationError = Math.IEEEremainder(heading - currentRotation,
+                RobotMap.WHEEL_ENCODER_TICKS);
+
         // minimize azimuth rotation, reversing drive if necessary
-        isInverted = Math.abs(azimuthError) > 0.25 * TICKS;
+        isInverted = Math.abs(rotationError) > 0.25 * RobotMap.WHEEL_ENCODER_TICKS;
         if (isInverted) {
-            azimuthError -= Math.copySign(0.5 * TICKS, azimuthError);
-            drive = -drive;
+            rotationError -= Math.copySign(0.5 * RobotMap.WHEEL_ENCODER_TICKS, rotationError);
+            speed = -speed;
         }
-        *///TODO: This would mean that instead of turning 170°, we turn -10 and flip the speed.
-        setSpeed(speed);
-        setHeading(heading);
-    }
 
-    /**
-     * Sets the speed to the given value.
-     * @param speed The percent of maximum speed at which to drive.
-     */
-    private void setSpeed(double speed) {
+        this.rotatorMotor.set(ControlMode.Position, currentRotation + rotationError);
         this.driveMotor.set(ControlMode.Velocity, speed * RobotMap.MAX_WHEEL_SPEED);
-    }
-
-    /**
-     * Sets the heading to the given value.
-     * @param heading The heading, in degrees, at which to angle the wheel.
-     */
-    private void setHeading(double heading) {
-        double rawCurrent = this.rotatorMotor.getSelectedSensorPosition();
-        double current = Utils.leastResidue(rawCurrent, 4096);
-        double target = heading * RobotMap.DEGREES_TO_ENCODER_UNITS;
-        double error = target - current;
-        if (Math.abs(error) > HALF_REVOLUTION_TICKS) {
-            error = -(Math.signum(error) * (FULL_REVOLUTION_TICKS - Math.abs(error)));
-        }
-        this.rotatorMotor.set(ControlMode.Position, rawCurrent + error);
     }
 
     /**
