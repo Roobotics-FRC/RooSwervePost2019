@@ -14,6 +14,7 @@ public final class RobotMap {
     // These are in inches, but units don't matter; only ratios are used
     public static final double ROBOT_TRACKWIDTH = 22;
     public static final double ROBOT_WHEELBASE = 27;
+    public static final double WHEEL_DIAMETER = 6; // TODO: measure this
 
     // OI devices
     public static final int DRIVE_JOYSTICK_PORT = 0;
@@ -38,6 +39,18 @@ public final class RobotMap {
 
     // CAN chain identifiers
     public static final int PIGEON_PORT = 19;
+
+    // Timeouts
+    public static final int TALON_TIMEOUT_MS = 1000;
+
+    // Motion profile measurements
+    // TODO: calculate these
+    public static final double MAX_VELOCITY = 1.6;
+    public static final double MAX_ACCEL = 3.2;
+    public static final double MAX_JERK = 60.0;
+
+    // Miscellaneous PID gains
+    public static final PID MOT_PROF_PID = new PID(0, 1, 0, 0);
 
     /**
      * Gets the drive motor configuration for the specified wheel.
