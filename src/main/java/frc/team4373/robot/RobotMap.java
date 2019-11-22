@@ -31,10 +31,10 @@ public final class RobotMap {
     public static final double MAX_WHEEL_SPEED = 8400; // TODO: calculate this
     public static final int PID_IDX = 0;
     public static final int WHEEL_COUNT = 4;
-    public static final double WHEEL_ENCODER_TICKS = 4096;
+    public static final int WHEEL_ENCODER_TICKS_PER_REV = 4096;
 
     // Conversion factors
-    public static final double DEGREES_TO_ENCODER_UNITS = 4096d / 360d;
+    public static final double DEGREES_TO_ENCODER_UNITS = WHEEL_ENCODER_TICKS_PER_REV / 360d;
     public static final double DEGREES_TO_PIGEON_UNITS = 8192d / 360d;
 
     // CAN chain identifiers

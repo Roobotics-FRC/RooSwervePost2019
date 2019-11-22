@@ -13,7 +13,10 @@ import frc.team4373.robot.input.WheelVector;
 public class SwerveWheel {
     private WPI_TalonSRX driveMotor;
     private WPI_TalonSRX rotatorMotor;
-    private double encoderOffset = 0;
+
+    private double rotationZeroPos = 0;
+    private double linearZeroPos = 0;
+
     private static final double HALF_REVOLUTION_TICKS = 180 * RobotMap.DEGREES_TO_ENCODER_UNITS;
     private static final double FULL_REVOLUTION_TICKS = 360 * RobotMap.DEGREES_TO_ENCODER_UNITS;
 
@@ -50,6 +53,8 @@ public class SwerveWheel {
         this.rotatorMotor.config_kP(RobotMap.PID_IDX, rotatorMotorConfig.gains.kP);
         this.rotatorMotor.config_kI(RobotMap.PID_IDX, rotatorMotorConfig.gains.kI);
         this.rotatorMotor.config_kD(RobotMap.PID_IDX, rotatorMotorConfig.gains.kD);
+
+        this.linearZeroPos = this.getRawLinearPos();
     }
 
     /**
@@ -83,8 +88,8 @@ public class SwerveWheel {
      * @param heading The heading, in degrees, at which to angle the wheel.
      */
     private void setHeading(double heading) {
-        double rawCurrent = this.getRotation() - this.encoderOffset;
-        double current = Utils.leastResidue(rawCurrent, 4096);
+        double rawCurrent = this.getRotationPos();
+        double current = Utils.leastResidue(rawCurrent, RobotMap.WHEEL_ENCODER_TICKS_PER_REV);
         double target = heading * RobotMap.DEGREES_TO_ENCODER_UNITS;
         double error = target - current;
         if (Math.abs(error) > HALF_REVOLUTION_TICKS) {
@@ -151,11 +156,36 @@ public class SwerveWheel {
     }
 
     /**
+     * Gets the current rotation of the rotator motor in encoder units relative to the 0 position.
+     * @return the current rotation in encoder units.
+     */
+    public double getRotationPos() {
+        return this.getRawRotationPos() - this.rotationZeroPos;
+    }
+
+    /**
      * Gets the current rotation of the rotator motor in encoder units.
      * @return the current rotation in encoder units.
      */
-    public double getRotation() {
+    public double getRawRotationPos() {
         return this.rotatorMotor.getSelectedSensorPosition();
+    }
+
+    /**
+     * Gets the current position of the drive encoder (i.e., distance traveled)
+     * relative to the start position.
+     * @return the distance traveled in encoder units.
+     */
+    public double getLinearPos() {
+        return this.getRawLinearPos() - this.linearZeroPos;
+    }
+
+    /**
+     * Gets the current, raw position of the drive encoder.
+     * @return the position of the encoder in encoder units.
+     */
+    public double getRawLinearPos() {
+        return this.driveMotor.getSelectedSensorPosition();
     }
 
     /**
@@ -184,7 +214,7 @@ public class SwerveWheel {
      * Resets the rotator encoder offset such that the specified heading is considered 0.
      * @param offset the raw encoder value to consider as forward (0).
      */
-    public void setRotationOffset(double offset) {
-        this.encoderOffset = offset;
+    public void setRotationZeroPos(double offset) {
+        this.rotationZeroPos = offset;
     }
 }

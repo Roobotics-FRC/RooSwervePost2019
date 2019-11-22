@@ -83,10 +83,10 @@ public class Drivetrain extends Subsystem {
             this.offsets = new EncoderOffsets(0, 0, 0, 0);
         }
 
-        this.right1.setRotationOffset(this.offsets.right1);
-        this.right2.setRotationOffset(this.offsets.right2);
-        this.left1.setRotationOffset(this.offsets.left1);
-        this.right2.setRotationOffset(this.offsets.left2);
+        this.right1.setRotationZeroPos(this.offsets.right1);
+        this.right2.setRotationZeroPos(this.offsets.right2);
+        this.left1.setRotationZeroPos(this.offsets.left1);
+        this.right2.setRotationZeroPos(this.offsets.left2);
     }
 
     /**
@@ -168,7 +168,7 @@ public class Drivetrain extends Subsystem {
      */
     public void resetEncoder(WheelID wheelID) {
         // Persist this offset to disk
-        double curRot = getWheel(wheelID).getRotation();
+        double curRot = getWheel(wheelID).getRawRotationPos();
         switch (wheelID) {
             case RIGHT_1:
                 this.offsets.right1 = curRot;
@@ -190,13 +190,13 @@ public class Drivetrain extends Subsystem {
         try {
             Files.writeString(configPath, gson.toJson(this.offsets));
         } catch (Exception e) {
-            DriverStation.reportError("Unable to persist offset in memory."
-                    + "Calibration will be lost upon power cycle. Exception details are below:\n"
-                    + e.getLocalizedMessage(), true);
+            DriverStation.reportError("Unable to persist offset " + curRot + " for wheel "
+                    + wheelID.name() + " on disk." + "Calibration will be lost upon power cycle."
+                    + "Exception details are below:\n" + e.getLocalizedMessage(), true);
         }
 
         // Set the encoder position on the wheel to zero at this location
-        getWheel(wheelID).setRotationOffset(curRot);
+        getWheel(wheelID).setRotationZeroPos(curRot);
     }
 
     /**
