@@ -39,6 +39,9 @@ public final class RobotMap {
     // CAN chain identifiers
     public static final int PIGEON_PORT = 19;
 
+    // Programmatic resources
+    public static final double FP_EQUALITY_THRESHOLD = 1e-5;
+
     /**
      * Gets the drive motor configuration for the specified wheel.
      * @param wheelID the wheel whose configuration to fetch.
