@@ -42,6 +42,12 @@ task roospotbugs(type: GradleBuild) {
     tasks = ['clean', 'build', 'spotbugsMain']
 }
 
+task gitsetup {
+    doLast {
+        Runtime.getRuntime().exec('git config core.hooksPath .githooks')
+    }
+}
+
 def ROBOT_MAIN_CLASS = "frc.team4373.robot.Main"
 
 ext.isMacOS = OperatingSystem.current().isMacOsX()
