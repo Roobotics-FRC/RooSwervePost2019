@@ -83,6 +83,7 @@ public class SwerveInputTransform {
     public static WheelVector.VectorSet processTranslation(double x, double y) {
         double angle = Utils.calculateYOffset(x, y);
         double magnitude = Math.sqrt(x * x + y * y);
+        if (magnitude > 1) magnitude = 1;
         WheelVector vec = new WheelVector(magnitude, angle);
         return new WheelVector.VectorSet(vec, vec, vec, vec);
     }
