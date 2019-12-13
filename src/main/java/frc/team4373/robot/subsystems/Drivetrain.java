@@ -107,16 +107,20 @@ public class Drivetrain extends Subsystem {
         }
     }
 
+    public double getWheelLinearPos(WheelID wheelID) {
+        return getWheel(wheelID).getLinearPos();
+    }
+
     /**
      * Resets the encoders to within [-4095, 4095]
      * Call this method in `robotInit` to (almost) eliminate the possibility of
      *  accumulator rollover during one power cycle.
      */
     public void modularizeEncoders() {
-        this.right1.modularizeAbsoluteEncoder();
-        this.right2.modularizeAbsoluteEncoder();
-        this.left1.modularizeAbsoluteEncoder();
-        this.left2.modularizeAbsoluteEncoder();
+        this.right1.modularizeAbsoluteRotation();
+        this.right2.modularizeAbsoluteRotation();
+        this.left1.modularizeAbsoluteRotation();
+        this.left2.modularizeAbsoluteRotation();
     }
 
     /**
@@ -124,13 +128,24 @@ public class Drivetrain extends Subsystem {
      * It should be called once per mechanical change, with all wheels facing forward.
      */
     public void resetEncoder(WheelID wheelID) {
-        getWheel(wheelID).resetAbsoluteEncoder();
+        getWheel(wheelID).resetAbsoluteRotation();
     }
 
+    /**
+     * Sets PID gains for the specified {@link SwerveWheel}.
+     * @param wheelID the ID whose gains to modify.
+     * @param drivePID the PID gains for the speed loop.
+     * @param rotatorPID the PID gains for the rotational loop.
+     */
     public void setPID(WheelID wheelID, RobotMap.PID drivePID, RobotMap.PID rotatorPID) {
         getWheel(wheelID).setPID(drivePID, rotatorPID);
     }
 
+    /**
+     * Returns the {@link SwerveWheel} at the specified position.
+     * @param wheelID the ID of the wheel to fetch.
+     * @return the indicated wheel object.
+     */
     private SwerveWheel getWheel(WheelID wheelID) {
         switch (wheelID) {
             case RIGHT_1:

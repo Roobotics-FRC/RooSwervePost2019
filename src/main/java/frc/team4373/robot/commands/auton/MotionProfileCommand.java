@@ -2,6 +2,7 @@ package frc.team4373.robot.commands.auton;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.team4373.robot.RobotMap;
+import frc.team4373.robot.input.WheelVector;
 import frc.team4373.robot.subsystems.Drivetrain;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
@@ -25,18 +26,21 @@ public class MotionProfileCommand extends Command {
             new Waypoint(5, 0, 0),
             new Waypoint(10, 5, 0)
         };
+
         final Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC,
-                Trajectory.Config.SAMPLES_HIGH, 1.0 / 50.0, RobotMap.MAX_VELOCITY,
-                RobotMap.MAX_ACCEL, RobotMap.MAX_JERK);
+                Trajectory.Config.SAMPLES_HIGH, 1.0 / RobotMap.SCHEDULER_EXEC_RATE,
+                RobotMap.MAX_VELOCITY, RobotMap.MAX_ACCEL, RobotMap.MAX_JERK);
         final SwerveModifier mod = new SwerveModifier(Pathfinder.generate(demoPoints, config))
                 .modify(RobotMap.ROBOT_TRACKWIDTH, RobotMap.ROBOT_WHEELBASE,
                         SwerveModifier.Mode.SWERVE_DEFAULT);
+
         this.followers = new EncoderFollower[] {
             new EncoderFollower(mod.getFrontRightTrajectory()),
             new EncoderFollower(mod.getBackRightTrajectory()),
             new EncoderFollower(mod.getFrontLeftTrajectory()),
             new EncoderFollower(mod.getBackLeftTrajectory())
         };
+
         for (EncoderFollower follower: followers) {
             follower.configureEncoder(0, RobotMap.WHEEL_ENCODER_TICKS_PER_REV,
                     RobotMap.WHEEL_DIAMETER);
@@ -54,9 +58,27 @@ public class MotionProfileCommand extends Command {
 
     @Override
     protected void execute() {
-        // TODO: fill in
-        // ref https://github.com/Paradox2102/SwerveDrive/blob/master/src/team2102/robot/subsystems/DriveSubsystem.java
-        // ref https://github.com/JacisNonsense/Pathfinder/wiki/Pathfinder-for-FRC---Java
+        double r1Output = followers[0].calculate(
+                (int) drivetrain.getWheelLinearPos(Drivetrain.WheelID.RIGHT_1));
+        double r1Heading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(followers[0].getHeading()));
+        WheelVector r1Vec = new WheelVector(r1Output, r1Heading);
+
+        double r2Output = followers[1].calculate(
+                (int) drivetrain.getWheelLinearPos(Drivetrain.WheelID.RIGHT_2));
+        double r2Heading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(followers[1].getHeading()));
+        WheelVector r2Vec = new WheelVector(r2Output, r2Heading);
+
+        double l1Output = followers[2].calculate(
+                (int) drivetrain.getWheelLinearPos(Drivetrain.WheelID.LEFT_1));
+        double l1Heading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(followers[2].getHeading()));
+        WheelVector l1Vec = new WheelVector(l1Output, l1Heading);
+
+        double l2Output = followers[3].calculate(
+                (int) drivetrain.getWheelLinearPos(Drivetrain.WheelID.LEFT_2));
+        double l2Heading = Pathfinder.boundHalfDegrees(Pathfinder.r2d(followers[3].getHeading()));
+        WheelVector l2Vec = new WheelVector(l2Output, l2Heading);
+
+        drivetrain.setWheelsPID(new WheelVector.VectorSet(r1Vec, r2Vec, l1Vec, l2Vec));
     }
 
     @Override

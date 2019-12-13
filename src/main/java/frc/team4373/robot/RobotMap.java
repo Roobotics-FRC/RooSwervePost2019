@@ -31,17 +31,19 @@ public final class RobotMap {
     public static final double MAX_WHEEL_SPEED = 8400; // TODO: calculate this
     public static final int PID_IDX = 0;
     public static final int WHEEL_COUNT = 4;
-    public static final double WHEEL_ENCODER_TICKS = 4096;
+    public static final int WHEEL_ENCODER_TICKS_PER_REV = 4096;
 
     // Conversion factors
-    public static final double DEGREES_TO_ENCODER_UNITS = 4096d / 360d;
+    public static final double DEGREES_TO_ENCODER_UNITS = WHEEL_ENCODER_TICKS_PER_REV / 360d;
     public static final double DEGREES_TO_PIGEON_UNITS = 8192d / 360d;
+    public static final double ENCODER_UNITS_TO_IN = 1;
 
     // CAN chain identifiers
     public static final int PIGEON_PORT = 19;
 
-    // Timeouts
+    // Timing
     public static final int TALON_TIMEOUT_MS = 1000;
+    public static final int SCHEDULER_EXEC_RATE = 50;
 
     // Motion profile measurements
     // TODO: calculate these

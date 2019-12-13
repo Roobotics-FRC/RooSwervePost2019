@@ -18,9 +18,10 @@ public class SwerveWheel {
     private static final double HALF_REVOLUTION_TICKS = 180 * RobotMap.DEGREES_TO_ENCODER_UNITS;
     private static final double FULL_REVOLUTION_TICKS = 360 * RobotMap.DEGREES_TO_ENCODER_UNITS;
     private boolean isInverted = false;
+    private double linearZeroPos = 0;
 
     /**
-     * Constructs a new sweve wheel for the specified wheel.
+     * Constructs a new swerve wheel for the specified wheel.
      * @param wheelID the wheel to construct.
      */
     public SwerveWheel(Drivetrain.WheelID wheelID) {
@@ -52,6 +53,8 @@ public class SwerveWheel {
         this.rotatorMotor.config_kP(RobotMap.PID_IDX, rotatorMotorConfig.gains.kP);
         this.rotatorMotor.config_kI(RobotMap.PID_IDX, rotatorMotorConfig.gains.kI);
         this.rotatorMotor.config_kD(RobotMap.PID_IDX, rotatorMotorConfig.gains.kD);
+
+        this.linearZeroPos = this.getRawLinearPos();
     }
 
     /**
@@ -69,12 +72,13 @@ public class SwerveWheel {
 
         double currentRotation = rotatorMotor.getSelectedSensorPosition();
         double rotationError = Math.IEEEremainder(heading - currentRotation,
-                RobotMap.WHEEL_ENCODER_TICKS);
+                RobotMap.WHEEL_ENCODER_TICKS_PER_REV);
 
         // minimize azimuth rotation, reversing drive if necessary
-        isInverted = Math.abs(rotationError) > 0.25 * RobotMap.WHEEL_ENCODER_TICKS;
+        isInverted = Math.abs(rotationError) > 0.25 * RobotMap.WHEEL_ENCODER_TICKS_PER_REV;
         if (isInverted) {
-            rotationError -= Math.copySign(0.5 * RobotMap.WHEEL_ENCODER_TICKS, rotationError);
+            rotationError -= Math.copySign(0.5 * RobotMap.WHEEL_ENCODER_TICKS_PER_REV,
+                    rotationError);
             speed = -speed;
         }
 
@@ -112,9 +116,32 @@ public class SwerveWheel {
         this.driveMotor.config_kF(0, pid.kF);
     }
 
+    /**
+     * Sets swerve wheel vectors via percent output.
+     * @param speed the speed as a percent.
+     * @param heading the rotation speed as a percent.
+     */
     public void setPercentOutput(double speed, double heading) {
+        // TODO: Safety check speeds
         this.driveMotor.set(ControlMode.PercentOutput, speed);
         this.rotatorMotor.set(ControlMode.PercentOutput, heading);
+    }
+
+    /**
+     * Gets the current position of the drive encoder (i.e., distance traveled)
+     * relative to the start position.
+     * @return the distance traveled in encoder units.
+     */
+    public double getLinearPos() {
+        return this.getRawLinearPos() - this.linearZeroPos;
+    }
+
+    /**
+     * Gets the current, raw position of the drive encoder.
+     * @return the position of the encoder in encoder units.
+     */
+    public double getRawLinearPos() {
+        return this.driveMotor.getSelectedSensorPosition();
     }
 
     /**
@@ -125,17 +152,28 @@ public class SwerveWheel {
         this.rotatorMotor.set(ControlMode.PercentOutput, 0);
     }
 
+    /**
+     * NOTE: this is not actually a WheelVector, as its units are incorrect.
+     * @return a WheelVector of encoder values.
+     */
     public WheelVector encoderValues() {
         return new WheelVector(driveMotor.getSelectedSensorVelocity(),
                 rotatorMotor.getSelectedSensorPosition());
     }
 
-    public void modularizeAbsoluteEncoder() {
+    /**
+     * Sets the encoder's current position to be equal to its least residue
+     * mod the number of units in one revolution.
+     */
+    public void modularizeAbsoluteRotation() {
         this.rotatorMotor.setSelectedSensorPosition(
                 (int) (this.rotatorMotor.getSelectedSensorPosition() % FULL_REVOLUTION_TICKS));
     }
 
-    public void resetAbsoluteEncoder() {
+    /**
+     * Resets the rotator encoder offset such that the current heading is considered 0.
+     */
+    public void resetAbsoluteRotation() {
         this.rotatorMotor.setSelectedSensorPosition(0);
     }
 }
