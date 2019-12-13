@@ -45,6 +45,9 @@ public final class RobotMap {
     public static final int TALON_TIMEOUT_MS = 1000;
     public static final int SCHEDULER_EXEC_RATE = 50;
 
+    // Programmatic resources
+    public static final double FP_EQUALITY_THRESHOLD = 1e-5;
+
     // Motion profile measurements
     // TODO: calculate these
     public static final double MAX_VELOCITY = 1.6;

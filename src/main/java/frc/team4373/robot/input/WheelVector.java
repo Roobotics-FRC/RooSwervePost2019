@@ -1,5 +1,7 @@
 package frc.team4373.robot.input;
 
+import frc.team4373.robot.RobotMap;
+
 public class WheelVector {
     public final double speed;
     public final double angle;
@@ -59,6 +61,7 @@ public class WheelVector {
     }
 
     public boolean equals(WheelVector vector) {
-        return this.speed == vector.speed && this.angle == vector.angle;
+        return this.speed - vector.speed < RobotMap.FP_EQUALITY_THRESHOLD
+                && this.angle - vector.angle < RobotMap.FP_EQUALITY_THRESHOLD;
     }
 }
