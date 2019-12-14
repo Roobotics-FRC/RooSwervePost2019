@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.team4373.robot.commands.RunRunLogCommand;
 import frc.team4373.robot.commands.util.ResetWheelEncoderCommand;
 import frc.team4373.robot.commands.util.SetWheelPIDCommand;
 import frc.team4373.robot.subsystems.Drivetrain;
@@ -56,6 +57,14 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("R kF", 0);
 
         SmartDashboard.putData("Set Selected PID", new SetWheelPIDCommand());
+
+
+        SmartDashboard.putNumber("log_duration", 0);
+        SmartDashboard.putNumber("log_velocity", 0);
+        SmartDashboard.putBoolean("log_left", false);
+        SmartDashboard.putBoolean("log_right", false);
+
+        SmartDashboard.putData("Run Log Command", new RunRunLogCommand());
     }
 
     /**

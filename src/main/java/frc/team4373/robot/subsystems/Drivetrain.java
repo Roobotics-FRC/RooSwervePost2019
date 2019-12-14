@@ -1,17 +1,17 @@
 package frc.team4373.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.Utils;
 import frc.team4373.robot.commands.teleop.SwerveDriveWithJoystick;
 import frc.team4373.robot.input.WheelVector;
+import frc.team4373.roologger.subsystems.LoggableDrivetrain;
 
 /**
  * A programmatic representation of the robot's drivetrain.
  */
-public class Drivetrain extends Subsystem {
+public class Drivetrain extends LoggableDrivetrain {
     private static volatile Drivetrain instance;
 
     /**
@@ -48,6 +48,62 @@ public class Drivetrain extends Subsystem {
 
         this.pigeon = new PigeonIMU(RobotMap.PIGEON_PORT);
         this.initialAngle = getPigeonYaw();
+    }
+
+    @Override
+    public void setLeft(double v) {
+        setWheelsPID(new WheelVector.VectorSet(
+                null,
+                null,
+                new WheelVector(1, 0),
+                new WheelVector(1,0)
+        ));
+    }
+
+    @Override
+    public void setRight(double v) {
+        setWheelsPID(new WheelVector.VectorSet(
+                new WheelVector(1, 0),
+                new WheelVector(1,0),
+                null,
+                null
+        ));
+    }
+
+    @Override
+    public double getLeftPercent() {
+        return 0;
+    }
+
+    @Override
+    public double getRightPercent() {
+        return 0;
+    }
+
+    @Override
+    public double getLeftVelocity() {
+        return left1.encoderValues().speed; //FIXME: If `encoderValues` made sense, this WOULD NOT
+        // work, but it doesn't make sense, so this does work.
+    }
+
+    @Override
+    public double getRightVelocity() {
+        return right1.encoderValues().speed;
+    }
+
+    @Override
+    public double getLeftPosition() {
+        return left1.getLinearPos();
+    }
+
+    @Override
+    public double getRightPosition() {
+        return right1.getLinearPos();
+    }
+
+    @Override
+    public double getYaw() {
+        return getPigeonYaw();
     }
 
     /**
