@@ -3,14 +3,14 @@ package frc.team4373.robot;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import frc.team4373.robot.subsystems.Drivetrain;
 
-import java.util.Objects;
+import frc.team4373.robot.RobotMap.*;
 
 /**
  * Holds various mappings and constants.
  */
 
-public final class RobotMap {
-    private RobotMap() {}
+public final class TestRobotMap {
+    private TestRobotMap() {}
 
     // Physical measurements
     // These are in inches, but units don't matter; only ratios are used
@@ -107,81 +107,4 @@ public final class RobotMap {
         }
     }
 
-    public static final class MotorConfig {
-        public final int port;
-        public final boolean inverted;
-        public final NeutralMode neutralMode;
-        public final boolean encoderPhase;
-        public final PID gains;
-
-        /**
-         * Constructs a new MotorConfig.
-         * @param port the port to which the motor is attached.
-         * @param inverted whether to invert motor output values.
-         * @param neutralMode the motor's passive neutral mode.
-         */
-        public MotorConfig(int port, boolean inverted,
-                           NeutralMode neutralMode, boolean encoderPhase, PID gains) {
-            this.port = port;
-            this.inverted = inverted;
-            this.neutralMode = neutralMode;
-            this.encoderPhase = encoderPhase;
-            this.gains = gains;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            MotorConfig that = (MotorConfig) o;
-            return port == that.port &&
-                    inverted == that.inverted &&
-                    encoderPhase == that.encoderPhase &&
-                    neutralMode == that.neutralMode &&
-                    gains.equals(that.gains);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(port, inverted, neutralMode, encoderPhase, gains);
-        }
-    }
-
-    // PID- and sensor-related constants
-    public static final class PID {
-        public final double kF;
-        public final double kP;
-        public final double kI;
-        public final double kD;
-
-        /**
-         * Constructs a new PID parameters object.
-         * @param kF feed-forward gain.
-         * @param kP proportional gain.
-         * @param kI integral gain.
-         * @param kD derivative gain.
-         */
-        public PID(double kF, double kP, double kI, double kD) {
-            this.kF = kF;
-            this.kP = kP;
-            this.kI = kI;
-            this.kD = kD;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            PID pid = (PID) o;
-            return Double.compare(pid.kF, kF) == 0 &&
-                    Double.compare(pid.kP, kP) == 0 &&
-                    Double.compare(pid.kI, kI) == 0 &&
-                    Double.compare(pid.kD, kD) == 0;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(kF, kP, kI, kD);
-        }
-    }
 }
