@@ -14,8 +14,11 @@ plugins {
     id "com.github.spotbugs" version "1.6.9"
 }
 
+sourceCompatibility = 1.11
+
 repositories {
     mavenCentral()
+    maven { url 'https://raw.githubusercontent.com/Roobotics-FRC/RooMaven/master' }
 }
 
 checkstyle {
@@ -126,6 +129,7 @@ test {
 dependencies {
     compile wpi.deps.wpilib()
     compile wpi.deps.vendor.java()
+    compile 'frc.team4373:roologger:1.0.0'
     nativeZip wpi.deps.vendor.jni(wpi.platforms.roborio)
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
