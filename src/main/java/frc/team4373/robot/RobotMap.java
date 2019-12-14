@@ -134,11 +134,11 @@ public final class RobotMap {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             MotorConfig that = (MotorConfig) o;
-            return port == that.port &&
-                    inverted == that.inverted &&
-                    encoderPhase == that.encoderPhase &&
-                    neutralMode == that.neutralMode &&
-                    gains.equals(that.gains);
+            return port == that.port
+                    && inverted == that.inverted
+                    && encoderPhase == that.encoderPhase
+                    && neutralMode == that.neutralMode
+                    && gains.equals(that.gains);
         }
 
         @Override
@@ -173,10 +173,10 @@ public final class RobotMap {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             PID pid = (PID) o;
-            return Double.compare(pid.kF, kF) == 0 &&
-                    Double.compare(pid.kP, kP) == 0 &&
-                    Double.compare(pid.kI, kI) == 0 &&
-                    Double.compare(pid.kD, kD) == 0;
+            return Double.compare(pid.kF, kF) == 0
+                    && Double.compare(pid.kP, kP) == 0
+                    && Double.compare(pid.kI, kI) == 0
+                    && Double.compare(pid.kD, kD) == 0;
         }
 
         @Override

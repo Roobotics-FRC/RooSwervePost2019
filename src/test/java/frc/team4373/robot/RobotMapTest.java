@@ -21,17 +21,20 @@ class RobotMapTest {
         assertEquals(TestRobotMap.OPERATOR_JOYSTICK_PORT, RobotMap.OPERATOR_JOYSTICK_PORT);
 
         // Buttons
-        assertEquals(TestRobotMap.BUTTON_DRIVE_FROM_SHUFFLEBOARD, RobotMap.BUTTON_DRIVE_FROM_SHUFFLEBOARD);
+        assertEquals(TestRobotMap.BUTTON_DRIVE_FROM_SHUFFLEBOARD,
+                RobotMap.BUTTON_DRIVE_FROM_SHUFFLEBOARD);
         assertEquals(TestRobotMap.BUTTON_DRIVE_WITH_JOYSTICK, RobotMap.BUTTON_DRIVE_WITH_JOYSTICK);
         assertEquals(TestRobotMap.BUTTON_KILL_AUTONS, RobotMap.BUTTON_KILL_AUTONS);
         assertEquals(TestRobotMap.BUTTON_RESET_ORIENTATION, RobotMap.BUTTON_RESET_ORIENTATION);
-        assertEquals(TestRobotMap.BUTTON_SWERVE_DRIVE_WITH_JOYSTICK, RobotMap.BUTTON_SWERVE_DRIVE_WITH_JOYSTICK);
+        assertEquals(TestRobotMap.BUTTON_SWERVE_DRIVE_WITH_JOYSTICK,
+                RobotMap.BUTTON_SWERVE_DRIVE_WITH_JOYSTICK);
 
         // Wheels et al.
         assertEquals(TestRobotMap.MAX_WHEEL_SPEED, RobotMap.MAX_WHEEL_SPEED);
         assertEquals(TestRobotMap.PID_IDX, RobotMap.PID_IDX);
         assertEquals(TestRobotMap.WHEEL_COUNT, RobotMap.WHEEL_COUNT);
-        assertEquals(TestRobotMap.WHEEL_ENCODER_TICKS_PER_REV, RobotMap.WHEEL_ENCODER_TICKS_PER_REV);
+        assertEquals(TestRobotMap.WHEEL_ENCODER_TICKS_PER_REV,
+                RobotMap.WHEEL_ENCODER_TICKS_PER_REV);
 
         // Conversion factors
         assertEquals(TestRobotMap.DEGREES_TO_ENCODER_UNITS, RobotMap.DEGREES_TO_ENCODER_UNITS);
