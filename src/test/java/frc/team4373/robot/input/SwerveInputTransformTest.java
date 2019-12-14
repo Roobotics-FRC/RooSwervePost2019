@@ -54,6 +54,19 @@ class SwerveInputTransformTest {
                 new WheelVector(1, 90 - Math.atan(2)),
                 new WheelVector(1, 90 - Math.atan(2)))));
 
+        WheelVector.VectorSet set6 = SwerveInputTransform.processTranslation(0.1, 0.1);
+        assertTrue(set6.equals(new WheelVector.VectorSet(
+                new WheelVector(Math.sqrt(0.02), 45),
+                new WheelVector(Math.sqrt(0.02), 45),
+                new WheelVector(Math.sqrt(0.02), 45),
+                new WheelVector(Math.sqrt(0.02), 45))));
+
+        WheelVector.VectorSet set7 = SwerveInputTransform.processTranslation(-1, 0);
+        assertTrue(set7.equals(new WheelVector.VectorSet(
+                new WheelVector(1,270),
+                new WheelVector(1, 270),
+                new WheelVector(1, 270),
+                new WheelVector(1, 270))));
 
     }
 }
