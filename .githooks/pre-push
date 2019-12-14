@@ -1,2 +1,2 @@
-./gradlew check || echo "$(tput bold) $(tput setaf 1) Warning: You are committing with issues. Run $(tput setaf 7) gradle check $(tput setaf 1)."
+./gradlew check || echo "$(tput bold)$(tput setaf 1)Warning: You are pushing with issues. Run $(tput setaf 7)gradle check$(tput sgr0)."
 
