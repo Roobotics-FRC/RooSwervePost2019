@@ -16,7 +16,7 @@ public final class RobotMap {
     // These are in inches, but units don't matter; only ratios are used
     public static final double ROBOT_TRACKWIDTH = 22;
     public static final double ROBOT_WHEELBASE = 27;
-    public static final double WHEEL_DIAMETER = 6; // TODO: measure this
+    public static final double WHEEL_DIAMETER = 6;
 
     // OI devices
     public static final int DRIVE_JOYSTICK_PORT = 0;
@@ -38,7 +38,8 @@ public final class RobotMap {
     // Conversion factors
     public static final double DEGREES_TO_ENCODER_UNITS = WHEEL_ENCODER_TICKS_PER_REV / 360d;
     public static final double DEGREES_TO_PIGEON_UNITS = 8192d / 360d;
-    public static final double ENCODER_UNITS_TO_IN = 1;
+    public static final double ENCODER_UNITS_TO_IN = WHEEL_DIAMETER  * Math.PI
+            / WHEEL_ENCODER_TICKS_PER_REV;
 
     // CAN chain identifiers
     public static final int PIGEON_PORT = 19;

@@ -23,8 +23,9 @@ public class MotionProfileCommand extends Command {
 
         final Waypoint[] demoPoints = new Waypoint[] {
             new Waypoint(0, 0, 0),
-            new Waypoint(5, 0, 0),
-            new Waypoint(10, 5, 0)
+            new Waypoint(5 / RobotMap.ENCODER_UNITS_TO_IN, 0, 0),
+            new Waypoint(10 / RobotMap.ENCODER_UNITS_TO_IN,
+                    5 / RobotMap.ENCODER_UNITS_TO_IN, 0)
         };
 
         final Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC,
