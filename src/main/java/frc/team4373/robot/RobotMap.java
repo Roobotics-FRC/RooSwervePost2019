@@ -56,7 +56,7 @@ public final class RobotMap {
                 return new MotorConfig(13, true, NeutralMode.Brake, true,
                         new PID(0, 0.25, 0, 0));
             case RIGHT_1:
-                return new MotorConfig(15, false, NeutralMode.Brake, true,
+                return new MotorConfig(15, true, NeutralMode.Brake, true,
                         new PID(0, 0.25, 0, 0));
             case RIGHT_2:
                 return new MotorConfig(17, false, NeutralMode.Brake, true,
