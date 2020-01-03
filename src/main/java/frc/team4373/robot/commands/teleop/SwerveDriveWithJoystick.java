@@ -30,9 +30,6 @@ public class SwerveDriveWithJoystick extends Command {
         WheelVector.VectorSet vectors = SwerveInputTransform.processNorthUp(z, x, y,
                 drivetrain.getAngle());
         drivetrain.setWheelsPID(vectors);
-        if (OI.getInstance().getDriveJoystick().getRawButton(RobotMap.BUTTON_RESET_ORIENTATION)) {
-            drivetrain.resetPigeonYaw();
-        }
     }
 
     @Override
