@@ -12,8 +12,8 @@ public final class RobotMap {
 
     // Physical measurements
     // These are in inches, but units don't matter; only ratios are used
-    public static final double ROBOT_TRACKWIDTH = 22;
-    public static final double ROBOT_WHEELBASE = 27;
+    public static final double ROBOT_TRACKWIDTH = 24;
+    public static final double ROBOT_WHEELBASE = 24;
 
     // OI devices
     public static final int DRIVE_JOYSTICK_PORT = 0;
@@ -50,16 +50,16 @@ public final class RobotMap {
     public static MotorConfig getDriveMotorConfig(Drivetrain.WheelID wheelID) {
         switch (wheelID) {
             case LEFT_1:
-                return new MotorConfig(11, true, NeutralMode.Brake, true,
-                        new PID(0, 0.25, 0, 0));
-            case LEFT_2:
-                return new MotorConfig(13, true, NeutralMode.Brake, true,
-                        new PID(0, 0.25, 0, 0));
-            case RIGHT_1:
                 return new MotorConfig(15, true, NeutralMode.Brake, true,
                         new PID(0, 0.25, 0, 0));
+            case LEFT_2:
+                return new MotorConfig(11, true, NeutralMode.Brake, true,
+                        new PID(0, 0.25, 0, 0));
+            case RIGHT_1:
+                return new MotorConfig(17, true, NeutralMode.Brake, true,
+                        new PID(0, 0.25, 0, 0));
             case RIGHT_2:
-                return new MotorConfig(17, false, NeutralMode.Brake, true,
+                return new MotorConfig(13, false, NeutralMode.Brake, true,
                         new PID(0, 0.25, 0, 0));
             default:
                 return getDriveMotorConfig(Drivetrain.WheelID.LEFT_1);
@@ -74,16 +74,16 @@ public final class RobotMap {
     public static MotorConfig getRotatorMotorConfig(Drivetrain.WheelID wheelID) {
         switch (wheelID) {
             case LEFT_1:
-                return new MotorConfig(12, true, NeutralMode.Brake, false,
-                        new PID(0, 3.5, 0, 3));
-            case LEFT_2:
-                return new MotorConfig(14, true, NeutralMode.Brake, false,
-                        new PID(0, 3.5, 0, 3));
-            case RIGHT_1:
                 return new MotorConfig(16, true, NeutralMode.Brake, false,
                         new PID(0, 3.5, 0, 3));
-            case RIGHT_2:
+            case LEFT_2:
+                return new MotorConfig(12, true, NeutralMode.Brake, false,
+                        new PID(0, 3.5, 0, 3));
+            case RIGHT_1:
                 return new MotorConfig(18, true, NeutralMode.Brake, false,
+                        new PID(0, 3.5, 0, 3));
+            case RIGHT_2:
+                return new MotorConfig(14, true, NeutralMode.Brake, false,
                         new PID(0, 3.5, 0, 3));
             default:
                 return getRotatorMotorConfig(Drivetrain.WheelID.LEFT_1);
