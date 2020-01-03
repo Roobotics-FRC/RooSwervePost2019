@@ -52,16 +52,16 @@ public final class RobotMap {
         switch (wheelID) {
             case LEFT_1:
                 return new MotorConfig(15, true, NeutralMode.Brake, true,
-                        new PID(0, 0.5, 0, 0));
+                        new PID(0, 0.4, 0, 0));
             case LEFT_2:
                 return new MotorConfig(11, true, NeutralMode.Brake, true,
-                        new PID(0, 0.5, 0, 0));
+                        new PID(0, 0.4, 0, 0));
             case RIGHT_1:
                 return new MotorConfig(17, true, NeutralMode.Brake, true,
-                        new PID(0, 0.5, 0, 0));
+                        new PID(0, 0.4, 0, 0));
             case RIGHT_2:
                 return new MotorConfig(13, false, NeutralMode.Brake, true,
-                        new PID(0, 0.5, 0, 0));
+                        new PID(0, 0.4, 0, 0));
             default:
                 return getDriveMotorConfig(Drivetrain.WheelID.LEFT_1);
         }
