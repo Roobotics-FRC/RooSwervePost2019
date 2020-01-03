@@ -130,6 +130,14 @@ public class SwerveWheel {
                 rotatorMotor.getSelectedSensorPosition());
     }
 
+    /**
+     * Gets the percent output of the drive motor.
+     * @return the percent output, [-1, 1].
+     */
+    public double drivePercentOutput() {
+        return this.driveMotor.getMotorOutputPercent();
+    }
+
     public void modularizeAbsoluteEncoder() {
         this.rotatorMotor.setSelectedSensorPosition(
                 (int) (this.rotatorMotor.getSelectedSensorPosition() % FULL_REVOLUTION_TICKS));

@@ -55,6 +55,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("R kD", 3);
         SmartDashboard.putNumber("R kF", 0);
 
+        SmartDashboard.putNumber("% Out", Drivetrain.getInstance().getPercentOutput(
+                Drivetrain.WheelID.RIGHT_1));
+
         SmartDashboard.putData("Set Selected PID", new SetWheelPIDCommand());
     }
 

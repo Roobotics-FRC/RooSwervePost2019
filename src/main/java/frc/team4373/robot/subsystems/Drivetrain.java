@@ -68,6 +68,15 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
+     * Gets the percent output of the specified SwerveWheel.
+     * @param wheelID the ID of the wheel.
+     * @return the wheel's percent output, [-1, 1].
+     */
+    public double getPercentOutput(WheelID wheelID) {
+        return getWheel(wheelID).drivePercentOutput();
+    }
+
+    /**
      * Sets outputs of all motors of all wheels to zero.
      */
     public void zeroMotors() {
