@@ -27,7 +27,8 @@ public final class RobotMap {
     public static final int BUTTON_SWERVE_DRIVE_WITH_JOYSTICK = 7;
 
     // Wheels et al.
-    public static final double MAX_WHEEL_SPEED = 8400; // TODO: calculate this
+    // Max speed really seems around 8000, but we want some leeway
+    public static final double MAX_WHEEL_SPEED = 8400;
     public static final int PID_IDX = 0;
     public static final int WHEEL_COUNT = 4;
     public static final double WHEEL_ENCODER_TICKS = 4096;
@@ -51,16 +52,16 @@ public final class RobotMap {
         switch (wheelID) {
             case LEFT_1:
                 return new MotorConfig(15, true, NeutralMode.Brake, true,
-                        new PID(0, 0.25, 0, 0));
+                        new PID(0, 0.5, 0, 0));
             case LEFT_2:
                 return new MotorConfig(11, true, NeutralMode.Brake, true,
-                        new PID(0, 0.25, 0, 0));
+                        new PID(0, 0.5, 0, 0));
             case RIGHT_1:
                 return new MotorConfig(17, true, NeutralMode.Brake, true,
-                        new PID(0, 0.25, 0, 0));
+                        new PID(0, 0.5, 0, 0));
             case RIGHT_2:
                 return new MotorConfig(13, false, NeutralMode.Brake, true,
-                        new PID(0, 0.25, 0, 0));
+                        new PID(0, 0.5, 0, 0));
             default:
                 return getDriveMotorConfig(Drivetrain.WheelID.LEFT_1);
         }
