@@ -12,6 +12,12 @@ import frc.team4373.robot.subsystems.Drivetrain;
  */
 public class SwerveDriveWithJoystick extends Command {
     private Drivetrain drivetrain;
+    private WheelVector.VectorSet brakeVectors = new WheelVector.VectorSet(
+            new WheelVector(0, 45),
+            new WheelVector(0, -45),
+            new WheelVector(0, -45),
+            new WheelVector(0, 45)
+    );
 
     public SwerveDriveWithJoystick() {
         requires(this.drivetrain = Drivetrain.getInstance());
@@ -27,8 +33,16 @@ public class SwerveDriveWithJoystick extends Command {
         double x = OI.getInstance().getDriveJoystick().rooGetX();
         double y = -OI.getInstance().getDriveJoystick().rooGetY();
         double z = OI.getInstance().getDriveJoystick().rooGetZFiltered();
-        WheelVector.VectorSet vectors = SwerveInputTransform.processNorthUp(z, x, y,
-                drivetrain.getAngle());
+        WheelVector.VectorSet vectors;
+        if (x == y && y == z && z == 0) {
+            System.out.println("in brake mode");
+            vectors = brakeVectors;
+        } else {
+            vectors = SwerveInputTransform.processNorthUp(z, x, y, drivetrain.getAngle());
+        }
+        System.out.println("x = " + x);
+        System.out.println("y = " + y);
+        System.out.println("z = " + z);
         drivetrain.setWheelsPID(vectors);
         if (OI.getInstance().getDriveJoystick().getRawButton(RobotMap.BUTTON_RESET_ORIENTATION)) {
             drivetrain.resetPigeonYaw();

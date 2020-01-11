@@ -60,10 +60,6 @@ public class SwerveWheel {
      * @param speed the percent of maximum speed at which to drive.
      */
     public void set(double speed, double heading) {
-        if (speed == 0) {
-            this.driveMotor.set(ControlMode.PercentOutput, 0);
-            return;
-        }
 
         heading *= RobotMap.DEGREES_TO_ENCODER_UNITS;
 
@@ -79,7 +75,11 @@ public class SwerveWheel {
         }
 
         this.rotatorMotor.set(ControlMode.Position, currentRotation + rotationError);
-        this.driveMotor.set(ControlMode.Velocity, speed * RobotMap.MAX_WHEEL_SPEED);
+        if (speed == 0) {
+            this.driveMotor.set(ControlMode.PercentOutput, 0);
+        } else {
+            this.driveMotor.set(ControlMode.Velocity, speed * RobotMap.MAX_WHEEL_SPEED);
+        }
     }
 
     /**
