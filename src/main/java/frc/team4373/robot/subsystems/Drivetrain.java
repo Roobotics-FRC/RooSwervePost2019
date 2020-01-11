@@ -159,7 +159,7 @@ public class Drivetrain extends Subsystem {
      * Resets the pigeon's yaw to consider the current orientation field-forward.
      */
     public void resetPigeonYaw() {
-        this.pigeon.setYaw(90);
+        this.initialAngle = this.getPigeonYaw();
     }
 
     /**
