@@ -7,53 +7,44 @@ import frc.team4373.robot.input.*;
 import frc.team4373.robot.subsystems.Drivetrain;
 
 /**
- * A Javadoc template. TODO: Update RotateAuton Javadoc.
+ * Rotates the robot a specified number of degrees.
  */
-public class RotateAngleAuton extends PIDCommand {
+public class RotateAngleOffsetAuton extends PIDCommand {
     private static final double THRESHOLD = 1;
     private static final RobotMap.PID pid = new RobotMap.PID(0, 0.001, 0, 0);
 
     private Drivetrain drivetrain;
-    private boolean firstTime = true;
+    private double offset;
     private double targetAngle;
 
-    public RotateAngleAuton(double offset) {
+    public RotateAngleOffsetAuton(double offset) {
         super("RotateAngleAuton", pid.kP, pid.kI, pid.kD);
         requires(this.drivetrain = Drivetrain.getInstance());
-        targetAngle = offset;
+        this.offset = offset;
     }
 
     @Override
     protected void initialize() {
-        targetAngle += drivetrain.getAngle();
-        targetAngle = Utils.normalizeAngle(targetAngle);
-        firstTime = true;
-    }
-
-    @Override
-    protected void execute() {
-        if (firstTime) {
-            targetAngle += drivetrain.getAngle();
-            targetAngle = Utils.normalizeAngle(targetAngle);
-            firstTime = false;
-        }
+        targetAngle = drivetrain.getPigeonYawRaw() + offset;
+        this.setSetpoint(0);
     }
 
     @Override
     protected boolean isFinished() {
         System.out.println("targetAngle = " + targetAngle);
-        System.out.println("drivetrain.getAngle() = " + drivetrain.getAngle());
-        return (targetAngle - drivetrain.getAngle()) < THRESHOLD;
+        System.out.println("drivetrain.getAngle() = " + drivetrain.getPigeonYawRaw());
+        return Math.abs(targetAngle - drivetrain.getPigeonYawRaw()) < THRESHOLD;
     }
 
     @Override
     protected double returnPIDInput() {
-        return targetAngle - drivetrain.getAngle();
+        return targetAngle - drivetrain.getPigeonYawRaw();
     }
 
     @Override
     protected void usePIDOutput(double output) {
-        drivetrain.setWheelsPID(SwerveInputTransform.processRotation(output));
+        System.out.println("output = " + output);
+        drivetrain.setWheelsPID(SwerveInputTransform.processOwnShipUp(output, 0, 0));
     }
 
     @Override

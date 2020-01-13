@@ -3,6 +3,7 @@ package frc.team4373.robot.input;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.commands.ClearSubsystemCommand;
+import frc.team4373.robot.commands.RotateAngleOffsetAuton;
 import frc.team4373.robot.commands.teleop.*;
 import frc.team4373.robot.input.filters.FineGrainedPiecewiseFilter;
 import frc.team4373.robot.input.filters.XboxAxisFilter;
@@ -20,6 +21,7 @@ public class OI {
     private JoystickButton shuffleboardDriveButton;
     private JoystickButton joystickDriveButton;
     private JoystickButton killAutonButton;
+    private JoystickButton autonRotateButton;
 
     private OI() {
         this.driveJoystick =
@@ -43,6 +45,10 @@ public class OI {
         killAutonButton = new JoystickButton(driveJoystick,
                 RobotMap.BUTTON_KILL_AUTONS);
         killAutonButton.whenPressed(new ClearSubsystemCommand(Drivetrain.getInstance()));
+
+        autonRotateButton = new JoystickButton(driveJoystick,
+                RobotMap.BUTTON_DO_AUTON_ROTATE);
+        autonRotateButton.whenPressed(new RotateAngleOffsetAuton(90));
     }
 
     /**

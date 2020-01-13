@@ -25,6 +25,7 @@ public final class RobotMap {
     public static final int BUTTON_KILL_AUTONS = 10;
     public static final int BUTTON_RESET_ORIENTATION = 4;
     public static final int BUTTON_SWERVE_DRIVE_WITH_JOYSTICK = 7;
+    public static final int BUTTON_DO_AUTON_ROTATE = 12;
 
     // Wheels et al.
     // Max speed really seems around 8000, but we want some leeway

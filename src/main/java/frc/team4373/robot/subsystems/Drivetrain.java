@@ -47,21 +47,21 @@ public class Drivetrain extends Subsystem {
         this.left2 = new SwerveWheel(WheelID.LEFT_2);
 
         this.pigeon = new PigeonIMU(RobotMap.PIGEON_PORT);
-        this.initialAngle = getPigeonYaw();
+        this.initialAngle = getPigeonYawRaw();
     }
 
     /**
-     * Returns the current angle relative to the starting position.
+     * Returns the current angle relative to the starting position (mod 360).
      */
     public double getAngle() {
-        return Utils.normalizeAngle(getPigeonYaw() - initialAngle);
+        return Utils.normalizeAngle(getPigeonYawRaw() - initialAngle);
     }
 
     /**
-     * Returns the Pigeon yaw value.
+     * Returns the raw Pigeon yaw value.
      * @return Pigeon yaw value.
      */
-    private double getPigeonYaw() {
+    public double getPigeonYawRaw() {
         double[] ypr = new double[3];
         this.pigeon.getYawPitchRoll(ypr);
         return ypr[0] * -1;
@@ -159,7 +159,7 @@ public class Drivetrain extends Subsystem {
      * Resets the pigeon's yaw to consider the current orientation field-forward.
      */
     public void resetPigeonYaw() {
-        this.initialAngle = this.getPigeonYaw();
+        this.initialAngle = this.getPigeonYawRaw();
     }
 
     /**
