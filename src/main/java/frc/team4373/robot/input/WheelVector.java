@@ -3,6 +3,8 @@ package frc.team4373.robot.input;
 import frc.team4373.robot.RobotMap;
 
 public class WheelVector {
+    public static final WheelVector ZERO = new WheelVector(0, 0);
+
     public final double speed;
     public final double angle;
 
@@ -17,6 +19,12 @@ public class WheelVector {
     }
 
     public static class VectorSet {
+        public static final VectorSet ZERO = new VectorSet(
+                WheelVector.ZERO,
+                WheelVector.ZERO,
+                WheelVector.ZERO,
+                WheelVector.ZERO);
+
         public WheelVector right1;
         public WheelVector right2;
         public WheelVector left1;
