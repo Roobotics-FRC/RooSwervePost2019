@@ -35,14 +35,10 @@ public class SwerveDriveWithJoystick extends Command {
         double z = OI.getInstance().getDriveJoystick().rooGetZFiltered();
         WheelVector.VectorSet vectors;
         if (x == y && y == z && z == 0) {
-            System.out.println("in brake mode");
             vectors = brakeVectors;
         } else {
             vectors = SwerveInputTransform.processNorthUp(z, x, y, drivetrain.getAngle());
         }
-        System.out.println("x = " + x);
-        System.out.println("y = " + y);
-        System.out.println("z = " + z);
         drivetrain.setWheelsPID(vectors);
         if (OI.getInstance().getDriveJoystick().getRawButton(RobotMap.BUTTON_RESET_ORIENTATION)) {
             drivetrain.resetPigeonYaw();
