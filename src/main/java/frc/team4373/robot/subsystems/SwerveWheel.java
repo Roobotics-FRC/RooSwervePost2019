@@ -4,10 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.team4373.robot.RobotMap;
-import frc.team4373.robot.Utils;
 import frc.team4373.robot.input.WheelVector;
-
-import static com.ctre.phoenix.motorcontrol.ControlMode.MotionMagic;
 
 /**
  * Represents a swerve wheel with two motors.
@@ -30,6 +27,9 @@ public class SwerveWheel {
         this.driveMotor = new WPI_TalonSRX(driveMotorConfig.port);
         this.rotatorMotor = new WPI_TalonSRX(rotatorMotorConfig.port);
 
+        this.driveMotor.configPeakCurrentLimit(RobotMap.TALON_MAX_AMPS,
+                RobotMap.TALON_TIMEOUT_MS);
+
         this.driveMotor.setInverted(driveMotorConfig.inverted);
         this.rotatorMotor.setInverted(rotatorMotorConfig.inverted);
 
@@ -41,7 +41,7 @@ public class SwerveWheel {
 
         this.driveMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         this.rotatorMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
-        this.rotatorMotor.configFeedbackNotContinuous(false, 1000);
+        this.rotatorMotor.configFeedbackNotContinuous(false, RobotMap.TALON_TIMEOUT_MS);
 
         this.driveMotor.config_kF(RobotMap.PID_IDX, driveMotorConfig.gains.kF);
         this.driveMotor.config_kP(RobotMap.PID_IDX, driveMotorConfig.gains.kP);

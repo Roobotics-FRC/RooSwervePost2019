@@ -33,6 +33,8 @@ public final class RobotMap {
     public static final int PID_IDX = 0;
     public static final int WHEEL_COUNT = 4;
     public static final double WHEEL_ENCODER_TICKS = 4096;
+    public static final int TALON_TIMEOUT_MS = 1000;
+    public static final int TALON_MAX_AMPS = 40;
 
     // Conversion factors
     public static final double DEGREES_TO_ENCODER_UNITS = 4096d / 360d;
