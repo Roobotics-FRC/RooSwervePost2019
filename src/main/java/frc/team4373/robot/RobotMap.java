@@ -35,6 +35,7 @@ public final class RobotMap {
     public static final double WHEEL_ENCODER_TICKS = 4096;
     public static final int TALON_TIMEOUT_MS = 1000;
     public static final int TALON_MAX_AMPS = 40;
+    public static final double AUTON_TURN_SPEED = 0.25;
 
     // Conversion factors
     public static final double DEGREES_TO_ENCODER_UNITS = 4096d / 360d;

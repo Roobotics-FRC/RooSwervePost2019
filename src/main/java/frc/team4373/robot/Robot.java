@@ -80,6 +80,7 @@ public class Robot extends TimedRobot {
         // SmartDashboard.getNumber("L1 R kP", 0.25);
         // SmartDashboard.getNumber("L1 R kP", 0.25);
         // SmartDashboard.getNumber("L1 R kP", 0.25);
+        SmartDashboard.putNumber("Yaw", Drivetrain.getInstance().getPigeonYawRaw());
     }
 
     /**
