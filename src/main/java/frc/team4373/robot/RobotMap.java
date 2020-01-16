@@ -26,6 +26,7 @@ public final class RobotMap {
     public static final int BUTTON_RESET_ORIENTATION = 4;
     public static final int BUTTON_SWERVE_DRIVE_WITH_JOYSTICK = 7;
     public static final int BUTTON_DO_AUTON_ROTATE = 12;
+    public static final int BUTTON_DO_VISION = 11;
 
     // Wheels et al.
     // Max speed really seems around 8000, but we want some leeway
@@ -46,6 +47,10 @@ public final class RobotMap {
 
     // Programmatic resources
     public static final double FP_EQUALITY_THRESHOLD = 1e-5;
+
+    // Vision
+    public static final double VISION_SAMPLE_COUNT = 10;
+    public static final String VISION_TABLE_NAME = "Vision";
 
     /**
      * Gets the drive motor configuration for the specified wheel.

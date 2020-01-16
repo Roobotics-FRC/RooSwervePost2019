@@ -33,7 +33,8 @@ public class RotateAngleOffsetAuton extends PIDCommand {
     protected void initialize() {
         targetAngle = drivetrain.getPigeonYawRaw() + offset;
         this.setSetpoint(targetAngle);
-        this.getPIDController().setOutputRange(-RobotMap.AUTON_TURN_SPEED, RobotMap.AUTON_TURN_SPEED);
+        this.getPIDController().setOutputRange(
+                -RobotMap.AUTON_TURN_SPEED, RobotMap.AUTON_TURN_SPEED);
     }
 
     @Override

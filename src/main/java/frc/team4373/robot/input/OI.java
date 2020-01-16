@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.commands.ClearSubsystemCommand;
 import frc.team4373.robot.commands.RotateAngleOffsetAuton;
+import frc.team4373.robot.commands.VisionQuerierCommand;
 import frc.team4373.robot.commands.teleop.*;
 import frc.team4373.robot.input.filters.FineGrainedPiecewiseFilter;
 import frc.team4373.robot.input.filters.XboxAxisFilter;
@@ -22,6 +23,7 @@ public class OI {
     private JoystickButton joystickDriveButton;
     private JoystickButton killAutonButton;
     private JoystickButton autonRotateButton;
+    private JoystickButton doVisionButton;
 
     private OI() {
         this.driveJoystick =
@@ -49,6 +51,11 @@ public class OI {
         autonRotateButton = new JoystickButton(driveJoystick,
                 RobotMap.BUTTON_DO_AUTON_ROTATE);
         autonRotateButton.whenPressed(new RotateAngleOffsetAuton(90));
+
+        doVisionButton = new JoystickButton(driveJoystick,
+                RobotMap.BUTTON_DO_VISION);
+        doVisionButton.whenPressed(new VisionQuerierCommand("degree_offset", 2,
+                RotateAngleOffsetAuton::new));
     }
 
     /**
