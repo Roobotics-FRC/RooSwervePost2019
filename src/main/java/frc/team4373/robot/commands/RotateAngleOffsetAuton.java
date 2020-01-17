@@ -12,12 +12,13 @@ import frc.team4373.robot.subsystems.Drivetrain;
  * Rotates the robot a specified number of degrees.
  */
 public class RotateAngleOffsetAuton extends PIDCommand {
-    private static final double THRESHOLD = 1;
-    private static final RobotMap.PID pid = new RobotMap.PID(0, 0.1, 0, 0);
+    private static final double THRESHOLD = 0.0625;
+    private static final RobotMap.PID pid = new RobotMap.PID(0, 0.01, 0, 0);
 
     private Drivetrain drivetrain;
     private double offset;
     private double targetAngle;
+    private boolean finished = false;
 
     /**
      * Constructs an offset rotator auton command.
@@ -35,12 +36,13 @@ public class RotateAngleOffsetAuton extends PIDCommand {
         this.setSetpoint(targetAngle);
         this.getPIDController().setOutputRange(
                 -RobotMap.AUTON_TURN_SPEED, RobotMap.AUTON_TURN_SPEED);
+        this.finished = false;
     }
 
     @Override
     protected boolean isFinished() {
         SmartDashboard.putNumber("targetAngle", targetAngle);
-        return Math.abs(targetAngle - drivetrain.getPigeonYawRaw()) < THRESHOLD;
+        return this.finished;
     }
 
     @Override
@@ -51,6 +53,10 @@ public class RotateAngleOffsetAuton extends PIDCommand {
     @Override
     protected void usePIDOutput(double output) {
         SmartDashboard.putNumber("output", output);
+        if (Math.abs(output) <= THRESHOLD) {
+            this.finished = true;
+            return;
+        }
         drivetrain.setWheelsPID(SwerveInputTransform.processOwnShipUp(output, 0, 0));
     }
 
