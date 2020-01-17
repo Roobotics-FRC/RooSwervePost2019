@@ -15,7 +15,7 @@ import java.util.function.Function;
 
 public class VisionQuerierCommand extends Command {
     private enum State {
-        POLLING, SETTING
+        POLLING, SETTING, WAITING
     }
 
     private State state;
@@ -24,6 +24,7 @@ public class VisionQuerierCommand extends Command {
     private String visionField;
     private double tolerance;
 
+    private PIDCommand command;
     private NetworkTable visionTable;
 
     private double accumulator = 0;
@@ -47,7 +48,6 @@ public class VisionQuerierCommand extends Command {
      */
     public VisionQuerierCommand(String visionField, double tolerance,
                                 Function<Double, PIDCommand> constructor) {
-        requires(Drivetrain.getInstance());
         this.visionField = visionField;
         this.tolerance = tolerance;
         this.constructor = constructor;
@@ -80,26 +80,46 @@ public class VisionQuerierCommand extends Command {
                 }
                 double sample = visionTable.getEntry(visionField).getDouble(0);
                 SmartDashboard.putNumber("v/sample", sample);
-                if (Math.abs(sample) < this.tolerance) {
-                    this.finished = true;
-                }
                 this.accumulator += sample;
                 ++this.iterationCount;
                 break;
             case SETTING:
                 SmartDashboard.putString("v/state", "setting");
+
                 // Compute setpoint by taking polling average
                 // The Network Tables field gives us the amount by which we're off,
                 // so we want to move opposite that direction to reach 0
                 double setpoint = -(this.accumulator / this.iterationCount);
                 SmartDashboard.putNumber("v/setpt", setpoint);
+
                 // Reset all variables for next iteration before we spin up the new command
                 resetStateVars();
+
+                // Check if offset setpoint would be less than acceptable tolerance
+                // (i.e., we're close enough)
+                if (Math.abs(setpoint) < this.tolerance) {
+                    System.out.println("Within tolerance");
+                    this.finished = true;
+                    break;
+                }
+
                 // Start the command—will steal control from us b/c we require the drivetrain
-                Scheduler.getInstance().add(this.constructor.apply(setpoint));
+                this.command = this.constructor.apply(setpoint);
+                Scheduler.getInstance().add(this.command);
+                this.state = State.WAITING;
+                break;
+            case WAITING:
+                SmartDashboard.putString("v/state", "waiting");
+                if (command.isRunning()) {
+                    SmartDashboard.putString("v/auton_cmd_state", "running");
+                } else {
+                    SmartDashboard.putString("v/auton_cmd_state", "done");
+                    this.state = State.POLLING;
+                }
                 break;
             default:
                 // We're in an undefined state—get out!
+                SmartDashboard.putString("v/state", "undefined");
                 this.finished = true;
                 break;
         }
