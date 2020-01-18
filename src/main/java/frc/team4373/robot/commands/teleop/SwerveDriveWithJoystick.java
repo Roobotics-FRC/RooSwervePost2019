@@ -1,6 +1,7 @@
 package frc.team4373.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.input.OI;
 import frc.team4373.robot.input.SwerveInputTransform;
@@ -39,6 +40,7 @@ public class SwerveDriveWithJoystick extends Command {
         } else {
             vectors = SwerveInputTransform.processNorthUp(z, x, y, drivetrain.getAngle());
         }
+        SmartDashboard.putString("swerve/Input Vectors", vectors.toString());
         drivetrain.setWheelsPID(vectors);
         if (OI.getInstance().getDriveJoystick().getRawButton(RobotMap.BUTTON_RESET_ORIENTATION)) {
             drivetrain.resetPigeonYaw();

@@ -3,6 +3,7 @@ package frc.team4373.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.input.WheelVector;
 
@@ -10,10 +11,13 @@ import frc.team4373.robot.input.WheelVector;
  * Represents a swerve wheel with two motors.
  */
 public class SwerveWheel {
-    private WPI_TalonSRX driveMotor;
-    private WPI_TalonSRX rotatorMotor;
     private static final double HALF_REVOLUTION_TICKS = 180 * RobotMap.DEGREES_TO_ENCODER_UNITS;
     private static final double FULL_REVOLUTION_TICKS = 360 * RobotMap.DEGREES_TO_ENCODER_UNITS;
+
+    private WPI_TalonSRX driveMotor;
+    private WPI_TalonSRX rotatorMotor;
+
+    private Drivetrain.WheelID wheelID;
     private boolean isInverted = false;
 
     /**
@@ -23,6 +27,7 @@ public class SwerveWheel {
     public SwerveWheel(Drivetrain.WheelID wheelID) {
         RobotMap.MotorConfig driveMotorConfig = RobotMap.getDriveMotorConfig(wheelID);
         RobotMap.MotorConfig rotatorMotorConfig = RobotMap.getRotatorMotorConfig(wheelID);
+        this.wheelID = wheelID;
 
         this.driveMotor = new WPI_TalonSRX(driveMotorConfig.port);
         this.rotatorMotor = new WPI_TalonSRX(rotatorMotorConfig.port);
@@ -67,12 +72,20 @@ public class SwerveWheel {
         double rotationError = Math.IEEEremainder(heading - currentRotation,
                 RobotMap.WHEEL_ENCODER_TICKS);
 
+        SmartDashboard.putNumber("swerve/" + this.wheelID.name() + "/Pre-Inv Rot", rotationError);
+
         // minimize azimuth rotation, reversing drive if necessary
         isInverted = Math.abs(rotationError) > 0.25 * RobotMap.WHEEL_ENCODER_TICKS;
         if (isInverted) {
             rotationError -= Math.copySign(0.5 * RobotMap.WHEEL_ENCODER_TICKS, rotationError);
             speed = -speed;
         }
+
+        SmartDashboard.putNumber("swerve/" + this.wheelID.name() + "/Rot Offset", rotationError);
+        SmartDashboard.putNumber("swerve/" + this.wheelID.name() + "/Rot Setpt",
+                currentRotation + rotationError);
+        SmartDashboard.putNumber("swerve/" + this.wheelID.name() + "/Speed",
+                speed * RobotMap.MAX_WHEEL_SPEED);
 
         this.rotatorMotor.set(ControlMode.Position, currentRotation + rotationError);
         if (speed == 0) {
