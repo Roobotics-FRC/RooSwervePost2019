@@ -34,6 +34,7 @@ public class SwerveWheel {
 
         this.driveMotor.configPeakCurrentLimit(RobotMap.TALON_MAX_AMPS,
                 RobotMap.TALON_TIMEOUT_MS);
+        this.driveMotor.enableCurrentLimit(true);
 
         this.driveMotor.setInverted(driveMotorConfig.inverted);
         this.rotatorMotor.setInverted(rotatorMotorConfig.inverted);
