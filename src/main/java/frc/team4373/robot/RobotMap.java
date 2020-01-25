@@ -63,7 +63,10 @@ public final class RobotMap {
                 return new MotorConfig(15, true, NeutralMode.Brake, true,
                         new PID(0, 0.4, 0, 0));
             case LEFT_2:
-                return new MotorConfig(11, true, NeutralMode.Brake, true,
+                // This inversion is now set to false. This is right on the new swerve chassis, but
+                //   not the old one. However, the old one should have its L2 encoder offset by 180
+                //   degrees, so that every swerve unit is immediately physically replaceable.
+                return new MotorConfig(11, false, NeutralMode.Brake, true,
                         new PID(0, 0.4, 0, 0));
             case RIGHT_1:
                 return new MotorConfig(17, true, NeutralMode.Brake, true,
