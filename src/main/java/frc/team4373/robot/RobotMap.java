@@ -37,10 +37,12 @@ public final class RobotMap {
     public static final int TALON_TIMEOUT_MS = 1000;
     public static final int TALON_MAX_AMPS = 40;
     public static final double AUTON_TURN_SPEED = 0.25;
+    public static final double AUTON_STRAFE_SPEED = 0.2;
 
     // Conversion factors
     public static final double DEGREES_TO_ENCODER_UNITS = 4096d / 360d;
     public static final double DEGREES_TO_PIGEON_UNITS = 8192d / 360d;
+    public static final double ENCODER_UNITS_TO_INCHES = 4 * Math.PI / 4096;
 
     // CAN chain identifiers
     public static final int PIGEON_PORT = 19;

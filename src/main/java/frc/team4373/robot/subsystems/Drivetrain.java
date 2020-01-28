@@ -87,6 +87,26 @@ public class Drivetrain extends Subsystem {
     }
 
     /**
+     * Gets the current position of the drive motor.
+     * @param wheelID the ID of the wheel whose position to fetch.
+     * @return the current position in encoder units.
+     */
+    public double getDriveMotorPosition(WheelID wheelID) {
+        return getWheel(wheelID).getDriveMotorPosition();
+    }
+
+    /**
+     * Gets the average of the drive motor positions.
+     * @return average of drive position in encoder units.
+     */
+    public double getAverageDriveMotorPosition() {
+        return (getDriveMotorPosition(WheelID.LEFT_1)
+                + getDriveMotorPosition(WheelID.LEFT_2)
+                + getDriveMotorPosition(WheelID.RIGHT_1)
+                + getDriveMotorPosition(WheelID.RIGHT_2)) / RobotMap.WHEEL_COUNT;
+    }
+
+    /**
      * Sets velocity vectors to the four SwerveWheels with PID setpoints for both speed and angle.
      * @param vectors the four vectors ordered right1, left1, left2, right2.
      */

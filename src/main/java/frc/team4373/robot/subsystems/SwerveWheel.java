@@ -152,6 +152,14 @@ public class SwerveWheel {
         return this.driveMotor.getMotorOutputPercent();
     }
 
+    /**
+     * Gets the current position of the drive motor.
+     * @return the current position in encoder units.
+     */
+    public double getDriveMotorPosition() {
+        return driveMotor.getSelectedSensorPosition();
+    }
+
     public void modularizeAbsoluteEncoder() {
         this.rotatorMotor.setSelectedSensorPosition(
                 (int) (this.rotatorMotor.getSelectedSensorPosition() % FULL_REVOLUTION_TICKS));
