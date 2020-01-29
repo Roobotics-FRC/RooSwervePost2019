@@ -27,7 +27,7 @@ public class OI {
 
     private OI() {
         this.driveJoystick =
-                new RooJoystick<>(RobotMap.DRIVE_JOYSTICK_PORT, new FineGrainedPiecewiseFilter());
+                new RooJoystick<>(RobotMap.DRIVE_JOYSTICK_PORT, null);
         this.operatorJoystick =
                 new RooJoystick<>(RobotMap.OPERATOR_JOYSTICK_PORT, new XboxAxisFilter());
 
