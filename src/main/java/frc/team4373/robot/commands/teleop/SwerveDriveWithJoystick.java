@@ -33,7 +33,7 @@ public class SwerveDriveWithJoystick extends Command {
     protected void execute() {
         double x = OI.getInstance().getDriveJoystick().rooGetX();
         double y = -OI.getInstance().getDriveJoystick().rooGetY();
-        double z = OI.getInstance().getDriveJoystick().rooGetZFiltered();
+        double z = OI.getInstance().getDriveJoystick().rooGetZ();
         WheelVector.VectorSet vectors;
         if (x == y && y == z && z == 0) {
             vectors = brakeVectors;
