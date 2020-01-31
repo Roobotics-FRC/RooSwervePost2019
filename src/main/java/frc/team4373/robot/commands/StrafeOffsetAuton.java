@@ -13,6 +13,8 @@ public class StrafeOffsetAuton extends PIDCommand {
     private static final double MOTOR_OUTPUT_THRESHOLD = 0.0625;
     private static final RobotMap.PID pid = new RobotMap.PID(0, 0.01, 0, 0);
 
+    private double initialAngle;
+
     private Drivetrain drivetrain;
     private double inchOffset;
     private double targetPosition;
@@ -36,6 +38,7 @@ public class StrafeOffsetAuton extends PIDCommand {
         this.getPIDController().setOutputRange(
                 -RobotMap.AUTON_STRAFE_SPEED, RobotMap.AUTON_STRAFE_SPEED);
         this.finished = false;
+        this.initialAngle = drivetrain.getAngle();
     }
 
     @Override
@@ -56,14 +59,11 @@ public class StrafeOffsetAuton extends PIDCommand {
             this.finished = true;
             return;
         }
-        double setPointAngle = 90;
-        WheelVector.VectorSet vectorSetPoint = new WheelVector.VectorSet(
-                new WheelVector(output, setPointAngle),
-                new WheelVector(output, setPointAngle),
-                new WheelVector(output, setPointAngle),
-                new WheelVector(output, setPointAngle)
+        double setpointAngle = 90;
+        WheelVector.VectorSet vectorSetpoint = SwerveInputTransform.processNorthUp(
+                0, output, 0, drivetrain.getAngle() - initialAngle
         );
-        drivetrain.setWheelsPID(vectorSetPoint);
+        drivetrain.setWheelsPID(vectorSetpoint);
     }
 
     @Override
