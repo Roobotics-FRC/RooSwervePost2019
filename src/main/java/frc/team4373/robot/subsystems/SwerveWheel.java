@@ -87,6 +87,8 @@ public class SwerveWheel {
                 currentRotation + rotationError);
         SmartDashboard.putNumber("swerve/" + this.wheelID.name() + "/Speed",
                 speed * RobotMap.MAX_WHEEL_SPEED);
+        SmartDashboard.putNumber("swerve/" + this.wheelID.name() + "/Pos",
+                this.getDriveMotorPosition());
 
         this.rotatorMotor.set(ControlMode.Position, currentRotation + rotationError);
         if (speed == 0) {
