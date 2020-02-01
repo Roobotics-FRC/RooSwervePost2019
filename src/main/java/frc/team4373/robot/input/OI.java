@@ -1,13 +1,13 @@
 package frc.team4373.robot.input;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.team4373.robot.RobotMap;
 import frc.team4373.robot.commands.ClearSubsystemCommand;
 import frc.team4373.robot.commands.RotateAngleOffsetAuton;
 import frc.team4373.robot.commands.VisionQuerierCommand;
 import frc.team4373.robot.commands.teleop.*;
-import frc.team4373.robot.input.filters.FineGrainedPiecewiseFilter;
-import frc.team4373.robot.input.filters.XboxAxisFilter;
+import frc.team4373.robot.input.filters.DoubleTypeFilter;
 import frc.team4373.robot.subsystems.Drivetrain;
 
 /**
@@ -15,8 +15,10 @@ import frc.team4373.robot.subsystems.Drivetrain;
  */
 public class OI {
     private static volatile OI oi = null;
-    private RooJoystick<FineGrainedPiecewiseFilter> driveJoystick;
-    private RooJoystick<XboxAxisFilter> operatorJoystick;
+    private RooJoystick driveJoystick;
+    // private RooJoystick<FineGrainedPiecewiseFilter> driveJoystick;
+    // private RooJoystick<XboxAxisFilter> operatorJoystick;
+    private RooJoystick operatorJoystick;
 
     private JoystickButton swerveDriveButton;
     private JoystickButton shuffleboardDriveButton;
@@ -27,9 +29,19 @@ public class OI {
 
     private OI() {
         this.driveJoystick =
-                new RooJoystick<>(RobotMap.DRIVE_JOYSTICK_PORT, null);
+                new RooJoystick(RobotMap.DRIVE_JOYSTICK_PORT, null, 0.09);
+        this.driveJoystick.configureAxis(Joystick.AxisType.kX.value, new DoubleTypeFilter() {
+            @Override
+            public Double applyFilter(Double val) {
+                return val * val * Math.signum(val);
+            }
+        }, 0.09);
+        // this.driveJoystick =
+        //         new RooJoystick<>(RobotMap.DRIVE_JOYSTICK_PORT, null);
+        // this.operatorJoystick =
+        //         new RooJoystick<>(RobotMap.OPERATOR_JOYSTICK_PORT, new XboxAxisFilter());
         this.operatorJoystick =
-                new RooJoystick<>(RobotMap.OPERATOR_JOYSTICK_PORT, new XboxAxisFilter());
+                new RooJoystick(RobotMap.OPERATOR_JOYSTICK_PORT, null, 0.09);
 
 
         swerveDriveButton = new JoystickButton(driveJoystick,
