@@ -1,7 +1,6 @@
 package frc.team4373.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.*;
 import frc.team4373.robot.subsystems.*;
 
 import java.util.Arrays;
@@ -16,6 +15,9 @@ public class ClearSubsystemCommand extends Command {
      */
     public ClearSubsystemCommand(Subsystem subsystem) {
         requires(subsystem);
+        if (subsystem instanceof Drivetrain) {
+            Scheduler.getInstance().removeAll();
+        }
     }
 
     @Override
