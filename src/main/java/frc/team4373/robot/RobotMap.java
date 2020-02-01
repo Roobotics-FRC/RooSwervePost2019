@@ -44,7 +44,7 @@ public final class RobotMap {
     public static final double DEGREES_TO_ENCODER_UNITS = 4096d / 360d;
     public static final double DEGREES_TO_PIGEON_UNITS = 8192d / 360d;
     public static final double DRIVE_GEARBOX_RATIO = 20 / 3d;
-    public static final double ENCODER_UNITS_TO_INCHES = WHEEL_DIAMETER * Math.PI
+    public static final double ENCODER_UNITS_TO_INCHES = WHEEL_DIAMETER * Math.PI * 4
             / WHEEL_ENCODER_TICKS_PER_REV / DRIVE_GEARBOX_RATIO;
 
     // CAN chain identifiers
@@ -68,9 +68,6 @@ public final class RobotMap {
                 return new MotorConfig(15, true, NeutralMode.Brake, true,
                         new PID(0, 0.4, 0, 0));
             case LEFT_2:
-                // This inversion is now set to false. This is right on the new swerve chassis, but
-                //   not the old one. However, the old one should have its L2 encoder offset by 180
-                //   degrees, so that every swerve unit is immediately physically replaceable.
                 return new MotorConfig(11, false, NeutralMode.Brake, true,
                         new PID(0, 0.4, 0, 0));
             case RIGHT_1:
