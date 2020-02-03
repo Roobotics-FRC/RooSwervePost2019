@@ -34,7 +34,8 @@ public final class RobotMap {
     public static final double MAX_WHEEL_SPEED = 8400;
     public static final int PID_IDX = 0;
     public static final int WHEEL_COUNT = 4;
-    public static final double WHEEL_ENCODER_TICKS_PER_REV = 4096;
+    public static final double ROTATOR_ENCODER_TICKS_PER_REV = 4096;
+    public static final double DRIVE_ENCODER_TICKS_PER_REV = 1024;
     public static final int TALON_TIMEOUT_MS = 1000;
     public static final int TALON_MAX_AMPS = 40;
     public static final double AUTON_TURN_SPEED = 0.25;
@@ -44,8 +45,8 @@ public final class RobotMap {
     public static final double DEGREES_TO_ENCODER_UNITS = 4096d / 360d;
     public static final double DEGREES_TO_PIGEON_UNITS = 8192d / 360d;
     public static final double DRIVE_GEARBOX_RATIO = 20 / 3d;
-    public static final double ENCODER_UNITS_TO_INCHES = WHEEL_DIAMETER * Math.PI * 4
-            / WHEEL_ENCODER_TICKS_PER_REV / DRIVE_GEARBOX_RATIO;
+    public static final double ENCODER_UNITS_TO_INCHES = WHEEL_DIAMETER * Math.PI
+            / DRIVE_ENCODER_TICKS_PER_REV / DRIVE_GEARBOX_RATIO;
 
     // CAN chain identifiers
     public static final int PIGEON_PORT = 19;

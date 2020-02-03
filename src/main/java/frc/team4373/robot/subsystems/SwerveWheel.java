@@ -71,14 +71,14 @@ public class SwerveWheel {
 
         double currentRotation = rotatorMotor.getSelectedSensorPosition();
         double rotationError = Math.IEEEremainder(heading - currentRotation,
-                RobotMap.WHEEL_ENCODER_TICKS_PER_REV);
+                RobotMap.ROTATOR_ENCODER_TICKS_PER_REV);
 
         SmartDashboard.putNumber("swerve/" + this.wheelID.name() + "/Pre-Inv Rot", rotationError);
 
         // minimize azimuth rotation, reversing drive if necessary
-        isInverted = Math.abs(rotationError) > 0.25 * RobotMap.WHEEL_ENCODER_TICKS_PER_REV;
+        isInverted = Math.abs(rotationError) > 0.25 * RobotMap.ROTATOR_ENCODER_TICKS_PER_REV;
         if (isInverted) {
-            rotationError -= Math.copySign(0.5 * RobotMap.WHEEL_ENCODER_TICKS_PER_REV,
+            rotationError -= Math.copySign(0.5 * RobotMap.ROTATOR_ENCODER_TICKS_PER_REV,
                     rotationError);
             speed = -speed;
         }
