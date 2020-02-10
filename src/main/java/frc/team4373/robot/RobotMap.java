@@ -67,16 +67,16 @@ public final class RobotMap {
         switch (wheelID) {
             case LEFT_1:
                 return new MotorConfig(15, true, NeutralMode.Brake, true,
-                        new PID(0, 0.4, 0, 0));
+                        new PID(0, 0.2, 0, 0.05));
             case LEFT_2:
                 return new MotorConfig(11, false, NeutralMode.Brake, true,
-                        new PID(0, 0.4, 0, 0));
+                        new PID(0, 0.2, 0, 0.05));
             case RIGHT_1:
                 return new MotorConfig(17, true, NeutralMode.Brake, true,
-                        new PID(0, 0.4, 0, 0));
+                        new PID(0, 0.2, 0, 0.05));
             case RIGHT_2:
                 return new MotorConfig(13, false, NeutralMode.Brake, true,
-                        new PID(0, 0.4, 0, 0));
+                        new PID(0, 0.2, 0, 0.05));
             default:
                 return getDriveMotorConfig(Drivetrain.WheelID.LEFT_1);
         }
@@ -91,16 +91,16 @@ public final class RobotMap {
         switch (wheelID) {
             case LEFT_1:
                 return new MotorConfig(16, true, NeutralMode.Brake, false,
-                        new PID(0, 3.5, 0, 3));
+                        new PID(0, 1, 0, 0.05));
             case LEFT_2:
                 return new MotorConfig(12, true, NeutralMode.Brake, false,
-                        new PID(0, 3.5, 0, 3));
+                        new PID(0, 1, 0, 0.05));
             case RIGHT_1:
                 return new MotorConfig(18, true, NeutralMode.Brake, false,
-                        new PID(0, 3.5, 0, 3));
+                        new PID(0, 1, 0, 0.05));
             case RIGHT_2:
                 return new MotorConfig(14, true, NeutralMode.Brake, false,
-                        new PID(0, 3.5, 0, 3));
+                        new PID(0, 1, 0, 0.05));
             default:
                 return getRotatorMotorConfig(Drivetrain.WheelID.LEFT_1);
         }
